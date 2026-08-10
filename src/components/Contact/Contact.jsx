@@ -21,6 +21,13 @@ export default function Contact() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleSendEmail = (e) => {
+    e.preventDefault();
+    // Opens web-based Gmail composer directly in a new tab with pre-filled recipient & subject
+    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(personalInfo.email)}&su=${encodeURIComponent('Frontend Developer Internship Inquiry — Minh Le Portfolio')}`;
+    window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <section id="contact" aria-label="Contact" style={{ background: 'var(--bg-cream)' }}>
       <div className="divider" />
@@ -68,7 +75,8 @@ export default function Contact() {
           }}>
             {/* Email contact row */}
             <motion.a
-              href={`mailto:${personalInfo.email}`}
+              href="#"
+              onClick={handleSendEmail}
               whileHover={{ scale: 1.02, y: -2 }}
               whileTap={{ scale: 0.98 }}
               style={{
@@ -85,12 +93,12 @@ export default function Contact() {
                 <Mail size={20} color="white" />
               </div>
               <div style={{ textAlign: 'left', flex: 1, overflow: 'hidden' }}>
-                <p style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '0.1rem' }}>Email</p>
+                <p style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '0.1rem' }}>Email Me</p>
                 <p style={{ opacity: 0.9, fontSize: '0.85rem', wordBreak: 'break-all', fontFamily: 'monospace' }}>
                   {personalInfo.email}
                 </p>
               </div>
-              <span style={{ opacity: 0.8, fontSize: '1.1rem' }}>✉️</span>
+              <span style={{ opacity: 0.8, fontSize: '1.1rem' }}>↗</span>
             </motion.a>
 
             {/* GitHub contact row */}
@@ -121,15 +129,15 @@ export default function Contact() {
 
             {/* Quick Actions */}
             <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <motion.a
+              <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                href={`mailto:${personalInfo.email}`}
+                onClick={handleSendEmail}
                 className="btn btn-primary"
                 style={{ flex: 1, minWidth: 160, justifyContent: 'center' }}
               >
-                <Mail size={16} /> Send Email
-              </motion.a>
+                <Mail size={16} /> Open Web Gmail
+              </motion.button>
 
               <motion.button
                 whileHover={{ scale: 1.04 }}
