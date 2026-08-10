@@ -107,7 +107,7 @@ export const projects = [
       'Responsive design',
     ],
     techStack: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Local Storage'],
-    github: 'https://github.com/minhthien435',
+    github: 'https://github.com/minhthien435/TodoApp',
     hasLiveDemo: false,
     accentColor: 'cyan',
   },
