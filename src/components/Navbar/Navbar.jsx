@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Github } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 
 const navLinks = [
@@ -132,7 +133,7 @@ export default function Navbar() {
             className="btn btn-primary"
             style={{ marginLeft: '0.75rem', padding: '0.5rem 1.1rem', fontSize: '0.875rem' }}
           >
-            <Github size={15} />
+            <GitHubIcon size={15} />
             GitHub
           </motion.a>
         </div>
@@ -197,7 +198,7 @@ export default function Navbar() {
               className="btn btn-primary"
               style={{ marginTop: '0.5rem', justifyContent: 'center' }}
             >
-              <Github size={16} /> GitHub
+              <GitHubIcon size={16} /> GitHub
             </a>
           </motion.div>
         )}

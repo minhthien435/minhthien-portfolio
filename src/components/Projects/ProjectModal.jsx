@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { X, ExternalLink, Github } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 
 export default function ProjectModal({ project, onClose }) {
   useEffect(() => {
@@ -126,7 +127,7 @@ export default function ProjectModal({ project, onClose }) {
             rel="noopener noreferrer"
             className="btn btn-outline"
           >
-            <Github size={15} /> GitHub
+            <GitHubIcon size={15} /> GitHub
           </motion.a>
           {project.hasLiveDemo && (
             <motion.a

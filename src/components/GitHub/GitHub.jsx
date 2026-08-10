@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Github, Star } from 'lucide-react';
+import { Star } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -47,7 +48,7 @@ export default function GitHubSection() {
                 boxShadow: 'var(--shadow-md)',
               }}
             >
-              <Github size={34} color="white" />
+              <GitHubIcon size={34} color="white" />
             </motion.div>
             <div>
               <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: '1.25rem', color: 'var(--text)', marginBottom: '0.2rem' }}>
@@ -74,7 +75,7 @@ export default function GitHubSection() {
               className="btn btn-primary"
               style={{ fontSize: '0.9375rem' }}
             >
-              <Github size={17} />
+              <GitHubIcon size={17} />
               View My GitHub
             </motion.a>
             <motion.a

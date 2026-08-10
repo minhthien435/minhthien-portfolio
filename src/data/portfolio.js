@@ -144,3 +144,10 @@ export const achievement = {
   date: 'August 2025',
   note: 'Demonstrates discipline, teamwork, and commitment to excellence.',
 };
+
+export const contact = {
+  message:
+    'Interested in working together or discussing a project? Feel free to get in touch.',
+  github: 'https://github.com/minhthien435',
+};
+

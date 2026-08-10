@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { Github, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { contact, personalInfo } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 
@@ -73,7 +74,7 @@ export default function Contact() {
               }}
             >
               <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                <Github size={20} color="white" />
+                <GitHubIcon size={20} color="white" />
               </div>
               <div style={{ textAlign: 'left' }}>
                 <p style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '0.1rem' }}>GitHub</p>
@@ -110,7 +111,7 @@ export default function Contact() {
             className="btn btn-primary"
             style={{ fontSize: '1rem', padding: '0.875rem 2.25rem' }}
           >
-            <Github size={18} /> View My GitHub
+            <GitHubIcon size={18} /> View My GitHub
           </motion.a>
         </motion.div>
       </div>

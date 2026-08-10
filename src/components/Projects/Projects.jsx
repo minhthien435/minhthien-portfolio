@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ArrowUpRight, X, ChevronRight } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, X, ChevronRight } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { projects } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ProjectModal from './ProjectModal';
@@ -170,7 +171,7 @@ function FeaturedProject({ project, onOpenModal }) {
             rel="noopener noreferrer"
             className="btn btn-outline"
           >
-            <Github size={15} /> GitHub
+            <GitHubIcon size={15} /> GitHub
           </motion.a>
           <motion.button
             whileHover={{ scale: 1.03 }}
@@ -249,7 +250,7 @@ function SecondaryProject({ project, onOpenModal }) {
           className="btn btn-outline"
           style={{ fontSize: '0.8125rem' }}
         >
-          <Github size={14} /> GitHub
+          <GitHubIcon size={14} /> GitHub
         </motion.a>
         <motion.button
           whileHover={{ scale: 1.04 }}

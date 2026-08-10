@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { motion } from 'framer-motion';
 import { personalInfo } from '../../data/portfolio';
 
@@ -45,7 +45,7 @@ export default function Footer() {
             onMouseEnter={e => { e.currentTarget.style.color = 'var(--violet)'; e.currentTarget.style.borderColor = 'var(--violet-mid)'; }}
             onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-2)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
           >
-            <Github size={14} /> @minhthien435
+            <GitHubIcon size={14} /> @minhthien435
           </motion.a>
         </div>
       </div>

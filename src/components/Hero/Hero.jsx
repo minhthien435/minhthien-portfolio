@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { ArrowRight, Github, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 import Mascot from '../../mascot/Mascot';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
@@ -194,7 +195,7 @@ export default function Hero() {
                 rel="noopener noreferrer"
                 className="btn btn-outline"
               >
-                <Github size={16} /> GitHub
+                <GitHubIcon size={16} /> GitHub
               </motion.a>
             </motion.div>
 
