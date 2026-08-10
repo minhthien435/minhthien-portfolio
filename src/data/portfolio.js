@@ -15,6 +15,7 @@ export const personalInfo = {
   status: 'Second-year IT student',
   careerDirection: 'Frontend Development',
   english: 'IELTS 6.0',
+  email: 'minhjordanlenguyen@gmail.com',
   github: 'https://github.com/minhthien435',
   githubHandle: 'minhthien435',
 };

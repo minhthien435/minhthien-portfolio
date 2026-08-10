@@ -1,3 +1,5 @@
+import { Mail, Copy, Check } from 'lucide-react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GitHubIcon from '../icons/GitHubIcon';
 import { contact, personalInfo } from '../../data/portfolio';
@@ -11,6 +13,13 @@ const reveal = {
 
 export default function Contact() {
   const reduced = useReducedMotion();
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personalInfo.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <section id="contact" aria-label="Contact" style={{ background: 'var(--bg-cream)' }}>
@@ -22,7 +31,7 @@ export default function Contact() {
           whileInView={reduced ? false : 'visible'}
           viewport={{ once: true }}
           style={{
-            maxWidth: 600, margin: '0 auto', textAlign: 'center',
+            maxWidth: 620, margin: '0 auto', textAlign: 'center',
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem',
           }}
         >
@@ -45,7 +54,7 @@ export default function Contact() {
             </p>
           </div>
 
-          {/* Contact card */}
+          {/* Contact card container */}
           <div style={{
             width: '100%',
             background: 'var(--bg-white)',
@@ -57,6 +66,33 @@ export default function Contact() {
             gap: '1rem',
             boxShadow: 'var(--shadow-sm)',
           }}>
+            {/* Email contact row */}
+            <motion.a
+              href={`mailto:${personalInfo.email}`}
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: '1rem',
+                padding: '1rem 1.25rem',
+                borderRadius: 'var(--r-lg)',
+                background: 'var(--violet)',
+                textDecoration: 'none',
+                color: 'white',
+                boxShadow: 'var(--shadow-violet)',
+              }}
+            >
+              <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <Mail size={20} color="white" />
+              </div>
+              <div style={{ textAlign: 'left', flex: 1, overflow: 'hidden' }}>
+                <p style={{ fontWeight: 700, fontSize: '0.9375rem', marginBottom: '0.1rem' }}>Email</p>
+                <p style={{ opacity: 0.9, fontSize: '0.85rem', wordBreak: 'break-all', fontFamily: 'monospace' }}>
+                  {personalInfo.email}
+                </p>
+              </div>
+              <span style={{ opacity: 0.8, fontSize: '1.1rem' }}>✉️</span>
+            </motion.a>
+
             {/* GitHub contact row */}
             <motion.a
               href={personalInfo.github}
@@ -71,7 +107,6 @@ export default function Contact() {
                 background: '#1C1917',
                 textDecoration: 'none',
                 color: 'white',
-                transition: 'transform 0.2s',
               }}
             >
               <div style={{ width: 40, height: 40, borderRadius: 10, background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -84,21 +119,28 @@ export default function Contact() {
               <span style={{ marginLeft: 'auto', opacity: 0.4, fontSize: '1rem' }}>↗</span>
             </motion.a>
 
-            {/* Note */}
-            <div style={{
-              padding: '0.875rem 1rem',
-              borderRadius: 'var(--r-md)',
-              background: 'var(--violet-light)',
-              border: '1.5px solid var(--violet-mid)',
-              textAlign: 'center',
-            }}>
-              <p style={{ color: 'var(--violet)', fontSize: '0.875rem', lineHeight: 1.6 }}>
-                💬 Open to connect via{' '}
-                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 700, color: 'var(--violet)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                  GitHub
-                </a>{' '}
-                or DMs. Always happy to chat about frontend development!
-              </p>
+            {/* Quick Actions */}
+            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <motion.a
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                href={`mailto:${personalInfo.email}`}
+                className="btn btn-primary"
+                style={{ flex: 1, minWidth: 160, justifyContent: 'center' }}
+              >
+                <Mail size={16} /> Send Email
+              </motion.a>
+
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={handleCopyEmail}
+                className="btn btn-outline"
+                style={{ flex: 1, minWidth: 160, justifyContent: 'center' }}
+              >
+                {copied ? <Check size={16} color="var(--green)" /> : <Copy size={16} />}
+                {copied ? 'Copied Email!' : 'Copy Email'}
+              </motion.button>
             </div>
           </div>
         </motion.div>
