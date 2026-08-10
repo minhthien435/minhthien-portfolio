@@ -3,6 +3,7 @@ import { GraduationCap, Target, Globe, Sparkles } from 'lucide-react';
 import { personalInfo, aboutText, careerObjective } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import Mascot from '../../mascot/Mascot';
+import fptCampus from '../../assets/fpt-campus.jpg';
 
 const reveal = {
   hidden:  { opacity: 0, y: 24 },
@@ -63,14 +64,8 @@ export default function About() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1.25rem',
-              position: 'relative',
             }}
           >
-            {/* Mini mascot sticker */}
-            <div className="about-mascot" style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', opacity: 0.9, pointerEvents: 'none' }}>
-              <Mascot size={72} compact />
-            </div>
-
             {/* Avatar + name row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{
@@ -103,72 +98,81 @@ export default function About() {
             </div>
           </BentoCell>
 
-          {/* Cell 2 — University card (1 col) */}
+          {/* Cell 2 — FPT University Campus Image Card */}
           <BentoCell
             delay={0.1}
             style={{
-              background: 'var(--violet)',
               borderRadius: 'var(--r-xl)',
-              padding: '1.75rem',
+              padding: '1.5rem',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
               color: 'white',
-              minHeight: 190,
+              minHeight: 200,
               position: 'relative',
               overflow: 'hidden',
-              boxShadow: 'var(--shadow-violet)',
+              boxShadow: 'var(--shadow-md)',
+              border: '1.5px solid var(--border-md)',
             }}
           >
-            {/* Background subtle watermark icon */}
+            {/* Background Campus Photo with dark gradient overlay */}
+            <img
+              src={fptCampus}
+              alt="FPT University Campus"
+              style={{
+                position: 'absolute', inset: 0,
+                width: '100%', height: '100%',
+                objectFit: 'cover',
+                zIndex: 0,
+                transition: 'transform 0.5s ease',
+              }}
+            />
             <div style={{
-              position: 'absolute', right: '-10px', bottom: '-10px',
-              opacity: 0.12, pointerEvents: 'none', transform: 'rotate(-10deg)',
-            }}>
-              <GraduationCap size={130} color="white" />
-            </div>
+              position: 'absolute', inset: 0,
+              background: 'linear-gradient(to top, rgba(15,10,30,0.88) 0%, rgba(15,10,30,0.45) 60%, rgba(15,10,30,0.2) 100%)',
+              zIndex: 1,
+            }} />
 
             {/* Top Row: Icon + Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 1 }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 2 }}>
               <div style={{
-                width: 40, height: 40, borderRadius: 12,
-                background: 'rgba(255,255,255,0.15)',
-                backdropFilter: 'blur(4px)',
+                width: 36, height: 36, borderRadius: 10,
+                background: 'rgba(255,255,255,0.22)',
+                backdropFilter: 'blur(8px)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
+                border: '1px solid rgba(255,255,255,0.3)',
               }}>
-                <GraduationCap size={22} color="white" />
+                <GraduationCap size={20} color="white" />
               </div>
               <span style={{
-                fontSize: '0.7rem', fontWeight: 700,
-                padding: '0.2rem 0.65rem', borderRadius: 99,
-                background: 'rgba(255,255,255,0.18)',
+                fontSize: '0.68rem', fontWeight: 700,
+                padding: '0.2rem 0.6rem', borderRadius: 99,
+                background: 'rgba(255,255,255,0.25)',
                 color: 'white', letterSpacing: '0.04em',
-                backdropFilter: 'blur(4px)',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255,255,255,0.3)',
               }}>
                 2nd Year
               </span>
             </div>
 
             {/* Bottom Content */}
-            <div style={{ zIndex: 1, marginTop: '1rem' }}>
+            <div style={{ zIndex: 2, marginTop: '1.5rem' }}>
               <p style={{
-                fontSize: '0.72rem', fontWeight: 600,
-                textTransform: 'uppercase', letterSpacing: '0.08em',
-                opacity: 0.8, marginBottom: '0.25rem',
+                fontSize: '0.68rem', fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.1em',
+                color: 'var(--yellow)', marginBottom: '0.2rem',
               }}>
-                Education
+                FPT UNIVERSITY
               </p>
               <h3 style={{
                 fontFamily: "'Space Grotesk', sans-serif",
-                fontWeight: 700, fontSize: '1.25rem',
-                color: 'white', lineHeight: 1.2, marginBottom: '0.35rem',
+                fontWeight: 800, fontSize: '1.25rem',
+                color: 'white', lineHeight: 1.2, marginBottom: '0.25rem',
               }}>
-                FPT University
-              </h3>
-              <p style={{ fontSize: '0.85rem', opacity: 0.9, fontWeight: 500 }}>
                 Software Engineering
-              </p>
-              <p style={{ fontSize: '0.75rem', opacity: 0.7, marginTop: '0.2rem' }}>
+              </h3>
+              <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>
                 Bachelor of IT · {personalInfo.educationPeriod}
               </p>
             </div>
