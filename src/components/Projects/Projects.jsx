@@ -166,7 +166,7 @@ function FeaturedProject({ project, onOpenModal }) {
   );
 }
 
-/* ── Secondary Project (TodoApp) ── */
+/* ── Secondary Project (Todo App) ── */
 function SecondaryProject({ project, onOpenModal }) {
   const reduced = useReducedMotion();
 
@@ -177,91 +177,125 @@ function SecondaryProject({ project, onOpenModal }) {
       whileInView={reduced ? false : 'visible'}
       viewport={{ once: true, margin: '-30px' }}
       transition={{ delay: 0.15 }}
-      className="spotlight-card"
+      className="project-card spotlight-card"
       onMouseMove={handleSpotlight}
       whileHover={{ y: -4, boxShadow: 'var(--shadow-lg)' }}
       style={{
-        background: 'var(--cyan-light)',
-        border: '1.5px solid #A5F3FC',
+        background: 'var(--bg-white)',
+        border: '1.5px solid var(--border)',
         borderRadius: 'var(--r-xl)',
         padding: '1.75rem',
         cursor: 'pointer',
         boxShadow: 'var(--shadow-sm)',
-        transition: 'box-shadow 0.25s',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       }}
       onClick={() => onOpenModal(project)}
     >
-      {/* Mini app mockup */}
-      <div style={{
-        background: 'rgba(255,255,255,0.72)',
-        border: '1.5px solid #A5F3FC',
-        borderRadius: 14,
-        padding: '0.875rem',
-        marginBottom: '1.25rem',
-        display: 'flex', flexDirection: 'column', gap: '0.5rem',
-      }}>
-        {/* Input row */}
-        <div style={{ display: 'flex', gap: '0.375rem' }}>
+      <div>
+        {/* macOS Style Mini App Window */}
+        <div style={{
+          background: 'var(--bg-cream)',
+          border: '1.5px solid var(--border)',
+          borderRadius: 14,
+          overflow: 'hidden',
+          marginBottom: '1.5rem',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.03)',
+        }}>
+          {/* App Header */}
           <div style={{
-            flex: 1, height: 22, borderRadius: 7,
-            background: 'rgba(14,116,144,0.1)', border: '1px solid rgba(14,116,144,0.25)',
-          }} />
-          <div style={{
-            width: 44, height: 22, borderRadius: 7, background: '#0E7490',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '0.5rem 0.75rem',
+            background: 'rgba(255,255,255,0.6)',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            <Plus size={12} color="white" strokeWidth={3} />
+            <div style={{ display: 'flex', gap: '0.35rem' }}>
+              <div style={{ width: 9, height: 9, borderRadius: '50%', background: '#FF5F57' }} />
+              <div style={{ width: 9, height: 9, borderRadius: '50%', background: '#FEBC2E' }} />
+              <div style={{ width: 9, height: 9, borderRadius: '50%', background: '#28C840' }} />
+            </div>
+            <span style={{ fontSize: '0.68rem', fontWeight: 600, color: 'var(--text-3)', fontFamily: 'monospace' }}>
+              TaskFlow Pro
+            </span>
+            <div style={{ width: 30 }} />
+          </div>
+
+          {/* App Body Preview */}
+          <div style={{ padding: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            {/* Task Add Bar */}
+            <div style={{ display: 'flex', gap: '0.375rem', alignItems: 'center' }}>
+              <div style={{
+                flex: 1, height: 26, borderRadius: 8,
+                background: 'var(--bg-white)', border: '1px solid var(--border)',
+                padding: '0 0.5rem', display: 'flex', alignItems: 'center',
+                fontSize: '0.68rem', color: 'var(--text-3)',
+              }}>
+                Add a new task...
+              </div>
+              <div style={{
+                width: 26, height: 26, borderRadius: 8, background: 'var(--violet)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <Plus size={13} color="white" strokeWidth={3} />
+              </div>
+            </div>
+
+            {/* Task Items */}
+            {[
+              { label: 'Create responsive UI components', tag: 'UI/UX', color: 'violet' },
+              { label: 'Implement state & Local Storage', tag: 'Logic', color: 'cyan' },
+              { label: 'Task filtering & CRUD operations', tag: 'Features', color: 'yellow' },
+            ].map(t => (
+              <div key={t.label} style={{
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                padding: '0.4rem 0.625rem', borderRadius: 8,
+                background: 'var(--bg-white)',
+                border: '1px solid var(--border)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                  <div style={{
+                    width: 15, height: 15, borderRadius: '50%', flexShrink: 0,
+                    background: 'var(--violet-light)', border: '1.5px solid var(--violet-mid)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <Check size={9} color="var(--violet)" strokeWidth={3.5} />
+                  </div>
+                  <span style={{ fontSize: '0.73rem', fontWeight: 500, color: 'var(--text-2)' }}>
+                    {t.label}
+                  </span>
+                </div>
+                <span className={`tag tag-${t.color}`} style={{ fontSize: '0.62rem', padding: '0.1rem 0.45rem' }}>
+                  {t.tag}
+                </span>
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* Task rows */}
-        {[
-          { label: 'Build portfolio UI', done: true },
-          { label: 'Integrate React Hooks', done: true },
-          { label: 'Responsive Layouts', done: true },
-        ].map(t => (
-          <div key={t.label} style={{
-            display: 'flex', alignItems: 'center', gap: '0.5rem',
-            padding: '0.375rem 0.625rem', borderRadius: 8,
-            background: 'rgba(255,255,255,0.75)',
-            border: '1px solid rgba(14,116,144,0.12)',
-          }}>
-            <div style={{
-              width: 14, height: 14, borderRadius: '50%', flexShrink: 0,
-              background: '#0E7490',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              <Check size={9} color="white" strokeWidth={3.5} />
-            </div>
-            <span style={{
-              fontSize: '0.72rem', fontWeight: 500,
-              color: '#0E7490',
-            }}>
-              {t.label}
-            </span>
-          </div>
-        ))}
+        {/* Project Meta info */}
+        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.625rem' }}>
+          <span className="tag tag-cyan" style={{ fontSize: '0.72rem' }}>{project.type}</span>
+          <span style={{ color: 'var(--text-3)', fontSize: '0.78rem' }}>{project.period}</span>
+        </div>
+
+        <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.25rem', color: 'var(--text)', marginBottom: '0.4rem' }}>
+          {project.name}
+        </h3>
+        <p style={{ color: 'var(--text-2)', fontSize: '0.9rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
+          {project.description}
+        </p>
+
+        {/* Tech tags */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
+          {project.techStack.map(t => (
+            <span key={t} className="tag tag-gray" style={{ fontSize: '0.78rem' }}>{t}</span>
+          ))}
+        </div>
       </div>
 
-      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.625rem' }}>
-        <span className="tag tag-cyan" style={{ fontSize: '0.72rem' }}>{project.type}</span>
-        <span style={{ color: '#0E7490', fontSize: '0.75rem', opacity: 0.7 }}>{project.period}</span>
-      </div>
-
-      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.125rem', color: 'var(--text)', marginBottom: '0.5rem' }}>
-        {project.name}
-      </h3>
-      <p style={{ color: '#0E7490', fontSize: '0.875rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
-        {project.shortDesc}
-      </p>
-
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
-        {project.techStack.map(t => (
-          <span key={t} className="tag tag-cyan" style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.5)' }}>{t}</span>
-        ))}
-      </div>
-
-      <div style={{ display: 'flex', gap: '0.5rem' }} onClick={e => e.stopPropagation()}>
+      {/* Buttons */}
+      <div style={{ display: 'flex', gap: '0.5rem', borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }} onClick={e => e.stopPropagation()}>
         <motion.a
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.96 }}
@@ -277,7 +311,7 @@ function SecondaryProject({ project, onOpenModal }) {
           whileHover={{ scale: 1.04 }}
           onClick={() => onOpenModal(project)}
           className="btn btn-ghost"
-          style={{ fontSize: '0.8125rem' }}
+          style={{ fontSize: '0.8125rem', marginLeft: 'auto' }}
         >
           View Details →
         </motion.button>
