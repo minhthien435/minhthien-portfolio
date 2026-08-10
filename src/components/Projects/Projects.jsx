@@ -84,20 +84,6 @@ function FeaturedProject({ project, onOpenModal }) {
               transition: 'transform 0.4s ease',
             }}
           />
-
-          {/* Live badge overlay */}
-          <div style={{
-            position: 'absolute', top: '1rem', right: '1rem',
-            background: 'rgba(16,185,129,0.9)', border: '1px solid rgba(255,255,255,0.4)',
-            borderRadius: 'var(--r-full)', padding: '0.25rem 0.75rem',
-            fontSize: '0.72rem', fontWeight: 700, color: '#FFFFFF',
-            display: 'flex', alignItems: 'center', gap: '0.35rem',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
-            backdropFilter: 'blur(4px)',
-          }}>
-            <span style={{ width:6, height:6, borderRadius:'50%', background:'#FFFFFF', animation:'pulse-ring 2s infinite' }} />
-            LIVE DEMO
-          </div>
         </div>
       </motion.div>
 
