@@ -51,6 +51,7 @@ export default function Navbar() {
   };
 
   return (
+    <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -226,17 +227,6 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Back to top */}
-      <motion.button
-        className={`back-to-top ${showTop ? 'visible' : ''}`}
-        aria-label="Back to top"
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.92 }}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <ArrowUp size={18} />
-      </motion.button>
-
       <style>{`
         @media (max-width: 700px) {
           .desktop-nav { display: none !important; }
@@ -244,5 +234,17 @@ export default function Navbar() {
         }
       `}</style>
     </motion.header>
+
+    {/* Back to top - Positioned fixed to bottom right of viewport */}
+    <motion.button
+      className={`back-to-top ${showTop ? 'visible' : ''}`}
+      aria-label="Back to top"
+      whileHover={{ scale: 1.08 }}
+      whileTap={{ scale: 0.92 }}
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+    >
+      <ArrowUp size={18} />
+    </motion.button>
+    </>
   );
 }
