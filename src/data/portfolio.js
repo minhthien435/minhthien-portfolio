@@ -80,7 +80,7 @@ export const projects = [
       'Dynamic pricing',
     ],
     techStack: ['ReactJS', 'Tailwind CSS', 'React Router', 'Axios', 'JavaScript'],
-    github: 'https://github.com/minhthien435',
+    github: 'https://github.com/minhthien435/parking-management-system',
     liveDemo: 'https://eparking-v1.vercel.app/',
     hasLiveDemo: true,
     accentColor: 'violet',
