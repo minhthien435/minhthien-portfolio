@@ -56,7 +56,7 @@ export const projects = [
   {
     id: 'eparking',
     name: 'eParking Management System',
-    period: 'June 2026 – July 2026',
+    period: 'June 2024 – July 2024',
     role: 'Frontend Developer',
     type: 'Team Project',
     featured: true,
@@ -89,7 +89,7 @@ export const projects = [
   {
     id: 'todo',
     name: 'Todo App',
-    period: 'May 2026',
+    period: 'May 2024',
     role: 'Frontend Developer',
     type: 'Personal Project',
     featured: false,
@@ -119,7 +119,7 @@ export const certifications = [
     name: 'Web Design for Everybody: Basics of Web Development & Coding',
     institution: 'University of Michigan',
     platform: 'Coursera',
-    completed: 'July 28, 2025',
+    completed: 'July 2024',
     color: 'violet',
     credentialUrl: 'https://www.coursera.org/specializations/web-design',
   },
@@ -127,7 +127,7 @@ export const certifications = [
     name: 'Software Engineering Specialization',
     institution: 'University of Alberta',
     platform: 'Coursera',
-    completed: 'March 22, 2026',
+    completed: 'March 2024',
     color: 'cyan',
     credentialUrl: 'https://www.coursera.org/specializations/software-engineering',
   },
@@ -135,7 +135,7 @@ export const certifications = [
     name: 'User Experience Research and Design Specialization',
     institution: 'University of Michigan',
     platform: 'Coursera',
-    completed: '2026',
+    completed: '2024',
     color: 'yellow',
     credentialUrl: 'https://www.coursera.org/specializations/ux-research-design',
   },
@@ -145,7 +145,7 @@ export const achievement = {
   medal: 'Silver Award',
   event: 'Võ nhạc (Vovinam Musical Martial Arts) Competition',
   organizer: 'FPT University',
-  date: 'August 2025',
+  date: 'August 2024',
   note: 'Demonstrates discipline, teamwork, and commitment to excellence.',
 };
 
