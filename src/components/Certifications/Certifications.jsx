@@ -113,9 +113,9 @@ export default function Certifications() {
                       {cert.completed}
                     </p>
                   </div>
-                  {/* View Credential — no fake URL, links to Coursera search */}
+                  {/* View Credential — real course page on Coursera */}
                   <a
-                    href="https://www.coursera.org"
+                    href={cert.credentialUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-ghost"

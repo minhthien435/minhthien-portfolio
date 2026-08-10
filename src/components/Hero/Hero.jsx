@@ -95,7 +95,7 @@ export default function Hero() {
 
       {/* Content */}
       <div className="container" style={{ position: 'relative', zIndex: 1, padding: '3rem 1.5rem' }}>
-        <div style={{
+        <div className="hero-grid" style={{
           display: 'grid',
           gridTemplateColumns: 'minmax(0,1fr) auto',
           gap: '2rem',
@@ -242,13 +242,22 @@ export default function Hero() {
           boxShadow: 'var(--shadow-sm)',
           animation: 'float 2.5s ease-in-out infinite',
         }}
+        className="hero-scroll-indicator"
       >
         <ChevronDown size={18} />
       </motion.button>
 
       <style>{`
-        @media (max-width: 720px) {
-          .mascot-col { display: none !important; }
+        @media (max-width: 960px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 1.5rem !important; }
+          .mascot-col { margin-top: 0.5rem; }
+          .mascot-col svg { width: 100% !important; max-width: 210px; height: auto !important; }
+        }
+        @media (max-width: 560px) {
+          .mascot-col svg { max-width: 170px; }
+        }
+        @media (max-height: 640px) {
+          .hero-scroll-indicator { display: none; }
         }
       `}</style>
     </section>

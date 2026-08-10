@@ -1,6 +1,7 @@
 import GitHubIcon from '../icons/GitHubIcon';
 import { motion } from 'framer-motion';
 import { personalInfo } from '../../data/portfolio';
+import Mascot from '../../mascot/Mascot';
 
 export default function Footer() {
   return (
@@ -8,13 +9,7 @@ export default function Footer() {
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
         {/* Left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-          <div style={{
-            width: 30, height: 30, borderRadius: 8,
-            background: 'var(--violet)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontWeight: 700, fontSize: '0.7rem', color: 'white',
-          }}>ML</div>
+          <Mascot size={34} compact />
           <p style={{ color: 'var(--text-3)', fontSize: '0.8125rem' }}>
             © {new Date().getFullYear()}{' '}
             <span style={{ color: 'var(--text-2)', fontWeight: 600 }}>Minh Le</span>

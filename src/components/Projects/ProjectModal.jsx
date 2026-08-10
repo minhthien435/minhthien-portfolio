@@ -1,18 +1,49 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { X, ExternalLink } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 
 export default function ProjectModal({ project, onClose }) {
+  const boxRef = useRef(null);
+  const titleId = `modal-title-${project.id}`;
+
   useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    const box = boxRef.current;
+
     const esc = (e) => e.key === 'Escape' && onClose();
+
+    const trap = (e) => {
+      if (e.key !== 'Tab' || !box) return;
+      const focusables = box.querySelectorAll(
+        'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
     document.addEventListener('keydown', esc);
+    document.addEventListener('keydown', trap);
     document.body.style.overflow = 'hidden';
+    box?.focus();
+
     return () => {
       document.removeEventListener('keydown', esc);
+      document.removeEventListener('keydown', trap);
       document.body.style.overflow = '';
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') {
+        previouslyFocused.focus();
+      }
     };
-  }, [onClose]);
+  }, [onClose, project.id]);
 
   return (
     <motion.div
@@ -24,10 +55,12 @@ export default function ProjectModal({ project, onClose }) {
       onClick={onClose}
       role="dialog"
       aria-modal="true"
-      aria-label={`${project.name} case study`}
+      aria-labelledby={titleId}
     >
       <motion.div
+        ref={boxRef}
         className="modal-box"
+        tabIndex={-1}
         initial={{ opacity: 0, y: 24, scale: 0.97 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.98 }}
@@ -61,7 +94,10 @@ export default function ProjectModal({ project, onClose }) {
               {project.period}
             </span>
           </div>
-          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 'clamp(1.25rem, 3vw, 1.625rem)', color: 'var(--text)', marginBottom: '0.25rem', letterSpacing: '-0.03em' }}>
+          <h2
+            id={titleId}
+            style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: 'clamp(1.25rem, 3vw, 1.625rem)', color: 'var(--text)', marginBottom: '0.25rem', letterSpacing: '-0.03em' }}
+          >
             {project.name}
           </h2>
           <p style={{ color: 'var(--violet)', fontWeight: 600, fontSize: '0.875rem' }}>

@@ -13,6 +13,9 @@ export default function CustomCursor() {
   const ringY = useSpring(mouseY, { stiffness: 120, damping: 22, mass: 0.5 });
 
   useEffect(() => {
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    if (coarse) return undefined;
+
     const move = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -27,9 +30,11 @@ export default function CustomCursor() {
       setHovered(isInteractive);
     };
 
+    document.body.classList.add('has-custom-cursor');
     window.addEventListener('mousemove', move);
     window.addEventListener('mouseover', checkHover);
     return () => {
+      document.body.classList.remove('has-custom-cursor');
       window.removeEventListener('mousemove', move);
       window.removeEventListener('mouseover', checkHover);
     };

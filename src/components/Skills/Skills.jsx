@@ -13,19 +13,6 @@ const tagVariants = {
   visible: { opacity: 1, scale: 1 },
 };
 
-const tagMap = {
-  'HTML5':      'rose',
-  'CSS3':       'cyan',
-  'JavaScript': 'yellow',
-  'ReactJS':    'violet',
-  'Bootstrap':  'violet',
-  'Git':        'rose',
-  'GitHub':     'gray',
-  'VS Code':    'cyan',
-  'TypeScript': 'cyan',
-  'C# / .NET':  'violet',
-};
-
 const groups = [
   {
     key: 'frontend',
@@ -154,7 +141,7 @@ export default function Skills() {
                   viewport={{ once: true }}
                 >
                   {items.map((skill) => {
-                    const color = tagMap[skill.name] || 'gray';
+                    const color = skill.color || 'gray';
                     return (
                       <motion.span
                         key={skill.name}

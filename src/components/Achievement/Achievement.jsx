@@ -22,9 +22,7 @@ export default function Achievement() {
           style={{ marginBottom: '1.5rem' }}
         >
           <p className="section-eyebrow">Beyond Code</p>
-          <h2 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: 'clamp(1.5rem, 3vw, 2rem)', marginTop: '0.5rem', letterSpacing: '-0.02em' }}>
-            Achievement
-          </h2>
+          <h2 className="headline" style={{ marginTop: '0.5rem' }}>Achievement</h2>
         </motion.div>
 
         <motion.div
@@ -35,7 +33,7 @@ export default function Achievement() {
           transition={{ delay: 0.1 }}
           whileHover={{ y: -3, boxShadow: 'var(--shadow-md)' }}
           style={{
-            maxWidth: 640,
+            maxWidth: 720,
             background: 'var(--bg-white)',
             border: '1.5px solid var(--border)',
             borderRadius: 'var(--r-xl)',

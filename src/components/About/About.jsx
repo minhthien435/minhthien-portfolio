@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { GraduationCap, Target, Globe, Sparkles } from 'lucide-react';
 import { personalInfo, aboutText, careerObjective } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import Mascot from '../../mascot/Mascot';
 
 const reveal = {
   hidden:  { opacity: 0, y: 24 },
@@ -62,8 +63,14 @@ export default function About() {
               display: 'flex',
               flexDirection: 'column',
               gap: '1.25rem',
+              position: 'relative',
             }}
           >
+            {/* Mini mascot sticker */}
+            <div className="about-mascot" style={{ position: 'absolute', top: '1.25rem', right: '1.5rem', opacity: 0.9, pointerEvents: 'none' }}>
+              <Mascot size={72} compact />
+            </div>
+
             {/* Avatar + name row */}
             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{
@@ -211,6 +218,7 @@ export default function About() {
         @media (max-width: 768px) {
           #about .bento-override { grid-template-columns: 1fr !important; }
           #about [style*="grid-column: span 2"] { grid-column: span 1 !important; }
+          .about-mascot { display: none !important; }
         }
       `}</style>
     </section>

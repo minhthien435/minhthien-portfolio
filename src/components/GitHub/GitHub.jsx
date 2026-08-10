@@ -36,19 +36,25 @@ export default function GitHubSection() {
         >
           {/* Left */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-            {/* GitHub avatar placeholder */}
+            {/* Real GitHub avatar */}
             <motion.div
               whileHover={{ scale: 1.05, rotate: -3 }}
               style={{
                 width: 72, height: 72,
                 borderRadius: '50%',
-                background: '#1C1917',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
                 flexShrink: 0,
                 boxShadow: 'var(--shadow-md)',
+                overflow: 'hidden',
               }}
             >
-              <GitHubIcon size={34} color="white" />
+              <img
+                src={`https://github.com/${personalInfo.githubHandle}.png`}
+                alt={`${personalInfo.githubHandle} GitHub avatar`}
+                width={72}
+                height={72}
+                loading="lazy"
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
             </motion.div>
             <div>
               <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: '1.25rem', color: 'var(--text)', marginBottom: '0.2rem' }}>

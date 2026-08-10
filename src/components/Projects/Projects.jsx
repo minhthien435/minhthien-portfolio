@@ -1,14 +1,22 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ArrowUpRight, X, ChevronRight } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, ChevronRight, Check, Plus } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { projects } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ProjectModal from './ProjectModal';
+import eparkingPreview from '../../assets/eparking-preview.png';
 
 const reveal = {
   hidden:  { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+};
+
+/* Track the mouse position as CSS custom props for the spotlight glow */
+const handleSpotlight = (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--spot-x', `${e.clientX - rect.left}px`);
+  e.currentTarget.style.setProperty('--spot-y', `${e.clientY - rect.top}px`);
 };
 
 /* ── Featured Project (eParking) ── */
@@ -21,7 +29,8 @@ function FeaturedProject({ project, onOpenModal }) {
       initial={reduced ? false : 'hidden'}
       whileInView={reduced ? false : 'visible'}
       viewport={{ once: true, margin: '-40px' }}
-      className="project-card"
+      className="project-card spotlight-card"
+      onMouseMove={handleSpotlight}
       style={{
         background: 'var(--bg-white)',
         border: '1.5px solid var(--border)',
@@ -61,50 +70,33 @@ function FeaturedProject({ project, onOpenModal }) {
           <ExternalLink size={13} color="rgba(255,255,255,0.3)" />
         </div>
 
-        {/* Project "screenshot" — illustrative UI */}
-        <div style={{ height: 220, padding: '1.25rem', position: 'relative', overflow: 'hidden' }}>
-          {/* Simulated UI grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: '0.75rem', height: '100%', opacity: 0.85 }}>
-            {/* Sidebar */}
-            <div style={{ background: 'rgba(124,58,237,0.15)', borderRadius: 10, padding: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <div style={{ width: '80%', height: 8, borderRadius: 4, background: 'var(--violet)', opacity: 0.7 }} />
-              {[1,2,3,4,5].map(i => (
-                <div key={i} style={{ width: `${60 + i*8}%`, height: 6, borderRadius: 4, background: 'rgba(255,255,255,0.15)' }} />
-              ))}
-            </div>
-            {/* Main content */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {/* Stats row */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '0.5rem' }}>
-                {[['var(--violet)','Slots','128'],['#06B6D4','Available','84'],['#10B981','Booked','44']].map(([c,l,v]) => (
-                  <div key={l} style={{ background: `rgba(255,255,255,0.06)`, borderRadius: 8, padding: '0.625rem', borderLeft: `3px solid ${c}` }}>
-                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.65rem', marginBottom: '0.2rem' }}>{l}</div>
-                    <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', fontFamily: 'monospace' }}>{v}</div>
-                  </div>
-                ))}
-              </div>
-              {/* Parking grid */}
-              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: 4 }}>
-                {Array.from({length:32}).map((_,i) => (
-                  <div key={i} style={{
-                    borderRadius: 3, aspectRatio:'1',
-                    background: i % 3 === 0 ? 'rgba(124,58,237,0.6)' : i % 5 === 0 ? 'rgba(16,185,129,0.5)' : 'rgba(255,255,255,0.08)',
-                  }} />
-                ))}
-              </div>
-            </div>
-          </div>
+        {/* Project Real Screenshot */}
+        <div style={{ height: 260, position: 'relative', overflow: 'hidden' }}>
+          <img
+            src={eparkingPreview}
+            alt="eParking Management System Interface"
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'top left',
+              display: 'block',
+              transition: 'transform 0.4s ease',
+            }}
+          />
 
-          {/* Live badge */}
+          {/* Live badge overlay */}
           <div style={{
             position: 'absolute', top: '1rem', right: '1rem',
-            background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.4)',
-            borderRadius: 'var(--r-full)', padding: '0.25rem 0.65rem',
-            fontSize: '0.72rem', fontWeight: 700, color: '#34D399',
-            display: 'flex', alignItems: 'center', gap: '0.3rem',
+            background: 'rgba(16,185,129,0.9)', border: '1px solid rgba(255,255,255,0.4)',
+            borderRadius: 'var(--r-full)', padding: '0.25rem 0.75rem',
+            fontSize: '0.72rem', fontWeight: 700, color: '#FFFFFF',
+            display: 'flex', alignItems: 'center', gap: '0.35rem',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+            backdropFilter: 'blur(4px)',
           }}>
-            <span style={{ width:5, height:5, borderRadius:'50%', background:'#34D399', animation:'pulse-ring 2s infinite' }} />
-            LIVE
+            <span style={{ width:6, height:6, borderRadius:'50%', background:'#FFFFFF', animation:'pulse-ring 2s infinite' }} />
+            LIVE DEMO
           </div>
         </div>
       </motion.div>
@@ -199,7 +191,8 @@ function SecondaryProject({ project, onOpenModal }) {
       whileInView={reduced ? false : 'visible'}
       viewport={{ once: true, margin: '-30px' }}
       transition={{ delay: 0.15 }}
-      className="project-card"
+      className="spotlight-card"
+      onMouseMove={handleSpotlight}
       whileHover={{ y: -4, boxShadow: 'var(--shadow-lg)' }}
       style={{
         background: 'var(--cyan-light)',
@@ -212,14 +205,56 @@ function SecondaryProject({ project, onOpenModal }) {
       }}
       onClick={() => onOpenModal(project)}
     >
-      {/* Icon block */}
+      {/* Mini app mockup */}
       <div style={{
-        width: 52, height: 52, borderRadius: 14,
-        background: '#0E7490', marginBottom: '1.25rem',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontSize: '1.5rem',
+        background: 'rgba(255,255,255,0.72)',
+        border: '1.5px solid #A5F3FC',
+        borderRadius: 14,
+        padding: '0.875rem',
+        marginBottom: '1.25rem',
+        display: 'flex', flexDirection: 'column', gap: '0.5rem',
       }}>
-        ✅
+        {/* Input row */}
+        <div style={{ display: 'flex', gap: '0.375rem' }}>
+          <div style={{
+            flex: 1, height: 22, borderRadius: 7,
+            background: 'rgba(14,116,144,0.1)', border: '1px solid rgba(14,116,144,0.25)',
+          }} />
+          <div style={{
+            width: 44, height: 22, borderRadius: 7, background: '#0E7490',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <Plus size={12} color="white" strokeWidth={3} />
+          </div>
+        </div>
+
+        {/* Task rows */}
+        {[
+          { label: 'Build portfolio UI', done: true },
+          { label: 'Integrate React Hooks', done: true },
+          { label: 'Responsive Layouts', done: true },
+        ].map(t => (
+          <div key={t.label} style={{
+            display: 'flex', alignItems: 'center', gap: '0.5rem',
+            padding: '0.375rem 0.625rem', borderRadius: 8,
+            background: 'rgba(255,255,255,0.75)',
+            border: '1px solid rgba(14,116,144,0.12)',
+          }}>
+            <div style={{
+              width: 14, height: 14, borderRadius: '50%', flexShrink: 0,
+              background: '#0E7490',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <Check size={9} color="white" strokeWidth={3.5} />
+            </div>
+            <span style={{
+              fontSize: '0.72rem', fontWeight: 500,
+              color: '#0E7490',
+            }}>
+              {t.label}
+            </span>
+          </div>
+        ))}
       </div>
 
       <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.625rem' }}>

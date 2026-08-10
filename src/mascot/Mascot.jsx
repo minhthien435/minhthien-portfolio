@@ -2,15 +2,17 @@ import { motion } from 'framer-motion';
 
 /**
  * Developer Mascot — SVG cartoon character
- * Friendly developer with laptop, purple hoodie, subtle personality
+ * Friendly developer with laptop, purple hoodie, subtle personality.
+ * `compact` renders a smaller, quieter version for reuse (About/Contact/Footer).
  */
-export default function Mascot({ size = 320, className = '' }) {
+export default function Mascot({ size = 320, className = '', compact = false }) {
   return (
     <motion.div
       className={className}
-      animate={{ y: [0, -10, 0] }}
-      transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      style={{ display: 'inline-block' }}
+      animate={compact ? { y: [0, -4, 0] } : { y: [0, -10, 0] }}
+      transition={{ duration: compact ? 5 : 4, repeat: Infinity, ease: 'easeInOut' }}
+      style={{ display: 'inline-block', lineHeight: 0 }}
+      aria-hidden="true"
     >
       <svg
         width={size}
@@ -18,8 +20,6 @@ export default function Mascot({ size = 320, className = '' }) {
         viewBox="0 0 320 320"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Developer mascot illustration"
-        role="img"
       >
         {/* ── Body / Chair area ── */}
         {/* Chair / seat */}
@@ -50,6 +50,9 @@ export default function Mascot({ size = 320, className = '' }) {
 
         {/* Neck */}
         <rect x="148" y="168" width="24" height="28" rx="8" fill="#FDE68A" />
+
+        {/* Hood — soft rim behind the head */}
+        <path d="M106 150 Q108 92 160 88 Q212 92 214 150 Q216 120 208 106 Q196 88 160 86 Q124 88 112 106 Q104 120 106 150 Z" fill="#6D28D9" />
 
         {/* Head */}
         <ellipse cx="160" cy="148" rx="52" ry="50" fill="#FDE68A" />
@@ -98,51 +101,54 @@ export default function Mascot({ size = 320, className = '' }) {
         <text x="116" y="237" fontFamily="monospace" fontSize="7" fill="#A78BFA">{'/'+'>'}</text>
         <rect x="92" y="241" width="30" height="3" rx="1.5" fill="#7C3AED" opacity="0.7" />
         <rect x="92" y="247" width="22" height="3" rx="1.5" fill="#06B6D4" opacity="0.7" />
-        <rect x="92" y="241" width="30" height="3" rx="1.5" fill="#7C3AED" opacity="0.7" />
         {/* Cursor blink */}
         <rect x="114" y="247" width="2" height="5" rx="1" fill="#FCD34D" opacity="0.9" />
 
-        {/* ── Doodle decorations ── */}
-        {/* Star top-right */}
-        <motion.g
-          animate={{ rotate: [0, 15, -5, 0], scale: [1, 1.1, 1] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          style={{ originX: '268px', originY: '58px' }}
-        >
-          <text x="255" y="72" fontSize="24" fill="#FCD34D">★</text>
-        </motion.g>
+        {/* ── Doodle decorations (hidden in compact mode) ── */}
+        {!compact && (
+          <>
+            {/* Star top-right */}
+            <motion.g
+              animate={{ rotate: [0, 15, -5, 0], scale: [1, 1.1, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              style={{ originX: '268px', originY: '58px' }}
+            >
+              <text x="255" y="72" fontSize="24" fill="#FCD34D">★</text>
+            </motion.g>
 
-        {/* Small star top-left */}
-        <motion.g
-          animate={{ rotate: [0, -10, 5, 0], scale: [1, 1.15, 1] }}
-          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          style={{ originX: '52px', originY: '96px' }}
-        >
-          <text x="44" y="104" fontSize="16" fill="#A78BFA">✦</text>
-        </motion.g>
+            {/* Small star top-left */}
+            <motion.g
+              animate={{ rotate: [0, -10, 5, 0], scale: [1, 1.15, 1] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              style={{ originX: '52px', originY: '96px' }}
+            >
+              <text x="44" y="104" fontSize="16" fill="#A78BFA">✦</text>
+            </motion.g>
 
-        {/* Sparkle right side */}
-        <motion.g
-          animate={{ opacity: [0.6, 1, 0.6], scale: [0.9, 1, 0.9] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}
-        >
-          <text x="268" y="160" fontSize="14" fill="#06B6D4">✧</text>
-        </motion.g>
+            {/* Sparkle right side */}
+            <motion.g
+              animate={{ opacity: [0.6, 1, 0.6], scale: [0.9, 1, 0.9] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.8 }}
+            >
+              <text x="268" y="160" fontSize="14" fill="#06B6D4">✧</text>
+            </motion.g>
 
-        {/* Arrow doodle pointing at laptop */}
-        <path d="M54 210 Q46 228 60 240" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" fill="none" strokeDasharray="4 3" />
-        <polygon points="57,242 62,234 66,242" fill="#7C3AED" />
+            {/* Arrow doodle pointing at laptop */}
+            <path d="M54 210 Q46 228 60 240" stroke="#7C3AED" strokeWidth="2" strokeLinecap="round" fill="none" strokeDasharray="4 3" />
+            <polygon points="57,242 62,234 66,242" fill="#7C3AED" />
 
-        {/* Speech bubble "let's build!" */}
-        <motion.g
-          animate={{ y: [0, -4, 0], rotate: [-2, 2, -2] }}
-          transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
-        >
-          <rect x="218" y="82" width="90" height="32" rx="12" fill="white" stroke="#E7E5E4" strokeWidth="1.5" />
-          <polygon points="228,114 234,124 240,114" fill="white" stroke="#E7E5E4" strokeWidth="1.5" />
-          <polygon points="229,113 234,122 240,113" fill="white" />
-          <text x="228" y="102" fontFamily="Space Grotesk, sans-serif" fontWeight="700" fontSize="10" fill="#7C3AED">let's build!</text>
-        </motion.g>
+            {/* Speech bubble "let's build!" */}
+            <motion.g
+              animate={{ y: [0, -4, 0], rotate: [-2, 2, -2] }}
+              transition={{ duration: 3.5, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+            >
+              <rect x="218" y="82" width="90" height="32" rx="12" fill="white" stroke="#E7E5E4" strokeWidth="1.5" />
+              <polygon points="228,114 234,124 240,114" fill="white" stroke="#E7E5E4" strokeWidth="1.5" />
+              <polygon points="229,113 234,122 240,113" fill="white" />
+              <text x="228" y="102" fontFamily="Space Grotesk, sans-serif" fontWeight="700" fontSize="10" fill="#7C3AED">let's build!</text>
+            </motion.g>
+          </>
+        )}
       </svg>
     </motion.div>
   );

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
+import { Menu, X, ArrowUp } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 
@@ -16,10 +16,15 @@ export default function Navbar() {
   const [scrolled, setScrolled]   = useState(false);
   const [menuOpen, setMenuOpen]   = useState(false);
   const [active,   setActive]     = useState('');
+  const [showTop,  setShowTop]    = useState(false);
+
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 32);
+      setShowTop(window.scrollY > 600);
       const ids = navLinks.map(l => l.href.replace('#', ''));
       let cur = '';
       ids.forEach(id => {
@@ -60,6 +65,9 @@ export default function Navbar() {
         boxShadow: scrolled ? '0 1px 0 var(--border)' : 'none',
       }}
     >
+      {/* Scroll progress bar */}
+      <motion.div className="scroll-progress" style={{ scaleX: progress }} aria-hidden="true" />
+
       <nav
         className="container"
         style={{
@@ -113,12 +121,26 @@ export default function Navbar() {
                   fontWeight: 500,
                   textDecoration: 'none',
                   color: isActive ? 'var(--violet)' : 'var(--text-2)',
-                  background: isActive ? 'var(--violet-light)' : 'transparent',
-                  transition: 'color 0.2s, background 0.2s',
+                  transition: 'color 0.2s',
+                  zIndex: 1,
                 }}
-                onMouseEnter={e => { if (!isActive) { e.currentTarget.style.color = 'var(--text)'; e.currentTarget.style.background = 'var(--bg-cream)'; }}}
-                onMouseLeave={e => { if (!isActive) { e.currentTarget.style.color = 'var(--text-2)'; e.currentTarget.style.background = 'transparent'; }}}
+                onMouseEnter={e => { if (!isActive) e.currentTarget.style.color = 'var(--text)'; }}
+                onMouseLeave={e => { if (!isActive) e.currentTarget.style.color = 'var(--text-2)'; }}
               >
+                {isActive && (
+                  <motion.span
+                    layoutId="nav-pill"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      background: 'var(--violet-light)',
+                      border: '1.5px solid var(--violet-mid)',
+                      borderRadius: 'var(--r-full)',
+                      zIndex: -1,
+                    }}
+                  />
+                )}
                 {link.label}
               </a>
             );
@@ -203,6 +225,17 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Back to top */}
+      <motion.button
+        className={`back-to-top ${showTop ? 'visible' : ''}`}
+        aria-label="Back to top"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.92 }}
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      >
+        <ArrowUp size={18} />
+      </motion.button>
 
       <style>{`
         @media (max-width: 700px) {

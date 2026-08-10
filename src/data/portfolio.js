@@ -120,6 +120,7 @@ export const certifications = [
     platform: 'Coursera',
     completed: 'July 28, 2025',
     color: 'violet',
+    credentialUrl: 'https://www.coursera.org/specializations/web-design',
   },
   {
     name: 'Software Engineering Specialization',
@@ -127,6 +128,7 @@ export const certifications = [
     platform: 'Coursera',
     completed: 'March 22, 2026',
     color: 'cyan',
+    credentialUrl: 'https://www.coursera.org/specializations/software-engineering',
   },
   {
     name: 'User Experience Research and Design Specialization',
@@ -134,6 +136,7 @@ export const certifications = [
     platform: 'Coursera',
     completed: '2026',
     color: 'yellow',
+    credentialUrl: 'https://www.coursera.org/specializations/ux-research-design',
   },
 ];
 

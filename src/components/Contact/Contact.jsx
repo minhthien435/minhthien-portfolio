@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { Mail } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { contact, personalInfo } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import Mascot from '../../mascot/Mascot';
 
 const reveal = {
   hidden:  { opacity: 0, y: 24 },
@@ -26,13 +26,14 @@ export default function Contact() {
             display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem',
           }}
         >
-          {/* Wave emoji */}
+          {/* Mascot */}
           <motion.div
-            animate={reduced ? {} : { rotate: [0, 14, -8, 14, 0], transition: { duration: 2, repeat: Infinity, delay: 1 } }}
-            style={{ fontSize: '3rem', display: 'inline-block' }}
-            aria-hidden="true"
+            initial={reduced ? false : { opacity: 0, scale: 0.85 }}
+            whileInView={reduced ? false : { opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            👋
+            <Mascot size={104} compact />
           </motion.div>
 
           {/* Heading */}
@@ -100,19 +101,6 @@ export default function Contact() {
               </p>
             </div>
           </div>
-
-          {/* CTA */}
-          <motion.a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className="btn btn-primary"
-            style={{ fontSize: '1rem', padding: '0.875rem 2.25rem' }}
-          >
-            <GitHubIcon size={18} /> View My GitHub
-          </motion.a>
         </motion.div>
       </div>
     </section>
