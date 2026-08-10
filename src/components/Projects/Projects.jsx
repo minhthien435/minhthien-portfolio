@@ -1,197 +1,312 @@
 import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, ArrowUpRight, X, ChevronRight } from 'lucide-react';
 import { projects } from '../../data/portfolio';
-import { useScrollAnimation, useMultiScrollAnimation } from '../../hooks/useScrollAnimation';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ProjectModal from './ProjectModal';
 
-function GithubIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-    </svg>
-  );
-}
+const reveal = {
+  hidden:  { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+};
 
-function ExternalIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-      <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
-    </svg>
-  );
-}
+/* ── Featured Project (eParking) ── */
+function FeaturedProject({ project, onOpenModal }) {
+  const reduced = useReducedMotion();
 
-function ProjectCard({ project, onOpenModal }) {
   return (
-    <div
-      className="card"
+    <motion.div
+      variants={reveal}
+      initial={reduced ? false : 'hidden'}
+      whileInView={reduced ? false : 'visible'}
+      viewport={{ once: true, margin: '-40px' }}
+      className="project-card"
       style={{
-        padding: '1.75rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1.25rem',
-        cursor: 'pointer',
-        height: '100%',
+        background: 'var(--bg-white)',
+        border: '1.5px solid var(--border)',
+        borderRadius: 'var(--r-xl)',
+        overflow: 'hidden',
+        boxShadow: 'var(--shadow-sm)',
       }}
-      onClick={() => onOpenModal(project)}
-      role="button"
-      tabIndex={0}
-      aria-label={`View details for ${project.name}`}
-      onKeyDown={(e) => e.key === 'Enter' && onOpenModal(project)}
     >
-      {/* Top row */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-          <span
-            style={{
-              display: 'inline-block',
-              padding: '0.2rem 0.6rem',
-              borderRadius: 99,
-              fontSize: '0.72rem',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              letterSpacing: '0.08em',
-              background: project.hasLiveDemo ? 'rgba(74,222,128,0.1)' : 'var(--color-accent-dim)',
-              color: project.hasLiveDemo ? '#4ade80' : 'var(--color-accent-hover)',
-              border: `1px solid ${project.hasLiveDemo ? 'rgba(74,222,128,0.25)' : 'rgba(99,102,241,0.25)'}`,
-            }}
-          >
-            {project.type}
-          </span>
-        </div>
-        <span style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', flexShrink: 0 }}>
-          {project.period}
-        </span>
-      </div>
-
-      {/* Title */}
-      <div>
-        <h3
-          style={{
-            fontWeight: 800,
-            fontSize: '1.125rem',
-            color: 'var(--color-text-primary)',
-            marginBottom: '0.4rem',
-            lineHeight: 1.3,
-          }}
-        >
-          {project.name}
-        </h3>
-        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', fontWeight: 600 }}>
-          Role: {project.role}
-        </p>
-      </div>
-
-      {/* Description */}
-      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', lineHeight: 1.7, flex: 1 }}>
-        {project.shortDesc}
-      </p>
-
-      {/* Top features */}
-      <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-        {project.features.slice(0, 4).map((f) => (
-          <li
-            key={f}
-            style={{
-              display: 'flex',
-              alignItems: 'flex-start',
-              gap: '0.4rem',
-              fontSize: '0.8125rem',
-              color: 'var(--color-text-muted)',
-            }}
-          >
-            <span style={{ color: 'var(--color-accent)', fontWeight: 700, flexShrink: 0, marginTop: '1px' }}>✓</span>
-            {f}
-          </li>
-        ))}
-        {project.features.length > 4 && (
-          <li style={{ fontSize: '0.8125rem', color: 'var(--color-accent)', fontStyle: 'italic' }}>
-            +{project.features.length - 4} more features...
-          </li>
-        )}
-      </ul>
-
-      {/* Tech stack */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
-        {project.techStack.map((tech) => (
-          <span key={tech} className="tech-chip">{tech}</span>
-        ))}
-      </div>
-
-      {/* Buttons */}
-      <div
-        style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}
-        onClick={(e) => e.stopPropagation()}
+      {/* Browser mockup header */}
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        transition={{ duration: 0.3 }}
+        onClick={() => onOpenModal(project)}
+        style={{
+          background: 'linear-gradient(135deg, #1C1917 0%, #292524 100%)',
+          padding: '0',
+          cursor: 'pointer',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
       >
-        <a
-          href={project.github}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn-ghost"
-        >
-          <GithubIcon /> GitHub
-        </a>
-        {project.hasLiveDemo && (
-          <a
+        {/* Browser chrome bar */}
+        <div style={{ padding: '0.875rem 1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+          <div style={{ display: 'flex', gap: '0.4rem' }}>
+            <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#FF5F57' }} />
+            <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#FEBC2E' }} />
+            <div style={{ width: 11, height: 11, borderRadius: '50%', background: '#28C840' }} />
+          </div>
+          <div style={{
+            flex: 1, margin: '0 0.75rem',
+            background: 'rgba(255,255,255,0.07)', borderRadius: 6,
+            padding: '0.3rem 0.75rem', fontSize: '0.75rem',
+            color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace',
+          }}>
+            eparking-v1.vercel.app
+          </div>
+          <ExternalLink size={13} color="rgba(255,255,255,0.3)" />
+        </div>
+
+        {/* Project "screenshot" — illustrative UI */}
+        <div style={{ height: 220, padding: '1.25rem', position: 'relative', overflow: 'hidden' }}>
+          {/* Simulated UI grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: '0.75rem', height: '100%', opacity: 0.85 }}>
+            {/* Sidebar */}
+            <div style={{ background: 'rgba(124,58,237,0.15)', borderRadius: 10, padding: '0.875rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              <div style={{ width: '80%', height: 8, borderRadius: 4, background: 'var(--violet)', opacity: 0.7 }} />
+              {[1,2,3,4,5].map(i => (
+                <div key={i} style={{ width: `${60 + i*8}%`, height: 6, borderRadius: 4, background: 'rgba(255,255,255,0.15)' }} />
+              ))}
+            </div>
+            {/* Main content */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              {/* Stats row */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: '0.5rem' }}>
+                {[['var(--violet)','Slots','128'],['#06B6D4','Available','84'],['#10B981','Booked','44']].map(([c,l,v]) => (
+                  <div key={l} style={{ background: `rgba(255,255,255,0.06)`, borderRadius: 8, padding: '0.625rem', borderLeft: `3px solid ${c}` }}>
+                    <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.65rem', marginBottom: '0.2rem' }}>{l}</div>
+                    <div style={{ color: 'white', fontWeight: 700, fontSize: '1rem', fontFamily: 'monospace' }}>{v}</div>
+                  </div>
+                ))}
+              </div>
+              {/* Parking grid */}
+              <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(8,1fr)', gap: 4 }}>
+                {Array.from({length:32}).map((_,i) => (
+                  <div key={i} style={{
+                    borderRadius: 3, aspectRatio:'1',
+                    background: i % 3 === 0 ? 'rgba(124,58,237,0.6)' : i % 5 === 0 ? 'rgba(16,185,129,0.5)' : 'rgba(255,255,255,0.08)',
+                  }} />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Live badge */}
+          <div style={{
+            position: 'absolute', top: '1rem', right: '1rem',
+            background: 'rgba(16,185,129,0.2)', border: '1px solid rgba(16,185,129,0.4)',
+            borderRadius: 'var(--r-full)', padding: '0.25rem 0.65rem',
+            fontSize: '0.72rem', fontWeight: 700, color: '#34D399',
+            display: 'flex', alignItems: 'center', gap: '0.3rem',
+          }}>
+            <span style={{ width:5, height:5, borderRadius:'50%', background:'#34D399', animation:'pulse-ring 2s infinite' }} />
+            LIVE
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Project info */}
+      <div style={{ padding: '1.75rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '1rem' }}>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.35rem', flexWrap: 'wrap' }}>
+              <span className="tag tag-violet" style={{ fontSize: '0.72rem', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                ★ Featured
+              </span>
+              <span className="tag tag-gray" style={{ fontSize: '0.72rem' }}>{project.type}</span>
+              <span style={{ color: 'var(--text-3)', fontSize: '0.78rem' }}>{project.period}</span>
+            </div>
+            <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.25rem', color: 'var(--text)' }}>
+              {project.name}
+            </h3>
+            <p style={{ color: 'var(--violet)', fontWeight: 600, fontSize: '0.8125rem', marginTop: '0.2rem' }}>
+              Role: {project.role}
+            </p>
+          </div>
+          <motion.button
+            whileHover={{ scale: 1.05, rotate: 5 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => onOpenModal(project)}
+            style={{
+              width: 40, height: 40, borderRadius: '50%',
+              background: 'var(--violet-light)', border: '1.5px solid var(--violet-mid)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: 'var(--violet)',
+            }}
+          >
+            <ArrowUpRight size={16} />
+          </motion.button>
+        </div>
+
+        <p style={{ color: 'var(--text-2)', fontSize: '0.9375rem', lineHeight: 1.7, marginBottom: '1.25rem' }}>
+          {project.description}
+        </p>
+
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
+          {project.techStack.map(t => (
+            <span key={t} className="tag tag-violet" style={{ fontSize: '0.78rem' }}>{t}</span>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap', borderTop: '1px solid var(--border)', paddingTop: '1.25rem' }}>
+          <motion.a
+            whileHover={{ scale: 1.04, y: -1 }}
+            whileTap={{ scale: 0.96 }}
             href={project.liveDemo}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary"
-            style={{ fontSize: '0.8125rem', padding: '0.5rem 1rem' }}
+            className="btn btn-primary"
           >
-            <ExternalIcon /> Live Demo
-          </a>
-        )}
-        <button
-          onClick={(e) => { e.stopPropagation(); onOpenModal(project); }}
-          className="btn-ghost"
-          style={{ marginLeft: 'auto' }}
+            <ExternalLink size={15} /> Live Demo
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.04, y: -1 }}
+            whileTap={{ scale: 0.96 }}
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-outline"
+          >
+            <Github size={15} /> GitHub
+          </motion.a>
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            onClick={() => onOpenModal(project)}
+            className="btn btn-ghost"
+            style={{ marginLeft: 'auto' }}
+          >
+            Details <ChevronRight size={14} />
+          </motion.button>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* ── Secondary Project (TodoApp) ── */
+function SecondaryProject({ project, onOpenModal }) {
+  const reduced = useReducedMotion();
+
+  return (
+    <motion.div
+      variants={reveal}
+      initial={reduced ? false : 'hidden'}
+      whileInView={reduced ? false : 'visible'}
+      viewport={{ once: true, margin: '-30px' }}
+      transition={{ delay: 0.15 }}
+      className="project-card"
+      whileHover={{ y: -4, boxShadow: 'var(--shadow-lg)' }}
+      style={{
+        background: 'var(--cyan-light)',
+        border: '1.5px solid #A5F3FC',
+        borderRadius: 'var(--r-xl)',
+        padding: '1.75rem',
+        cursor: 'pointer',
+        boxShadow: 'var(--shadow-sm)',
+        transition: 'box-shadow 0.25s',
+      }}
+      onClick={() => onOpenModal(project)}
+    >
+      {/* Icon block */}
+      <div style={{
+        width: 52, height: 52, borderRadius: 14,
+        background: '#0E7490', marginBottom: '1.25rem',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: '1.5rem',
+      }}>
+        ✅
+      </div>
+
+      <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.625rem' }}>
+        <span className="tag tag-cyan" style={{ fontSize: '0.72rem' }}>{project.type}</span>
+        <span style={{ color: '#0E7490', fontSize: '0.75rem', opacity: 0.7 }}>{project.period}</span>
+      </div>
+
+      <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.125rem', color: 'var(--text)', marginBottom: '0.5rem' }}>
+        {project.name}
+      </h3>
+      <p style={{ color: '#0E7490', fontSize: '0.875rem', lineHeight: 1.65, marginBottom: '1.25rem' }}>
+        {project.shortDesc}
+      </p>
+
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+        {project.techStack.map(t => (
+          <span key={t} className="tag tag-cyan" style={{ fontSize: '0.75rem', background: 'rgba(255,255,255,0.5)' }}>{t}</span>
+        ))}
+      </div>
+
+      <div style={{ display: 'flex', gap: '0.5rem' }} onClick={e => e.stopPropagation()}>
+        <motion.a
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.96 }}
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn btn-outline"
+          style={{ fontSize: '0.8125rem' }}
+        >
+          <Github size={14} /> GitHub
+        </motion.a>
+        <motion.button
+          whileHover={{ scale: 1.04 }}
+          onClick={() => onOpenModal(project)}
+          className="btn btn-ghost"
+          style={{ fontSize: '0.8125rem' }}
         >
           View Details →
-        </button>
+        </motion.button>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
 export default function Projects() {
-  const [selectedProject, setSelectedProject] = useState(null);
-  const headRef = useScrollAnimation();
-  const gridRef = useMultiScrollAnimation();
+  const [selected, setSelected] = useState(null);
+  const reduced = useReducedMotion();
+
+  const featured = projects.find(p => p.featured);
+  const secondary = projects.filter(p => !p.featured);
 
   return (
-    <section id="projects" aria-label="Projects">
-      <div className="section-divider" />
-      <div className="section-wrapper">
+    <section id="projects" aria-label="Projects" style={{ background: 'var(--bg-cream)' }}>
+      <div className="divider" />
+      <div className="container section-gap">
         {/* Header */}
-        <div ref={headRef} className="reveal" style={{ marginBottom: '3rem' }}>
-          <p className="section-label">What I've Built</p>
-          <h2 className="section-title">Projects</h2>
-          <p className="section-subtitle">
-            A collection of projects I've worked on to develop my frontend skills.
-          </p>
-        </div>
-
-        {/* Grid */}
-        <div
-          ref={gridRef}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '1.5rem',
-          }}
+        <motion.div
+          variants={reveal}
+          initial={reduced ? false : 'hidden'}
+          whileInView={reduced ? false : 'visible'}
+          viewport={{ once: true }}
+          style={{ marginBottom: '3rem', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '1rem' }}
         >
-          {projects.map((project, i) => (
-            <div key={project.id} className={`reveal reveal-delay-${i + 1}`} style={{ height: '100%' }}>
-              <ProjectCard project={project} onOpenModal={setSelectedProject} />
-            </div>
-          ))}
+          <div>
+            <p className="section-eyebrow">What I've Built</p>
+            <h2 className="headline" style={{ marginTop: '0.5rem' }}>Projects</h2>
+          </div>
+          <p style={{ color: 'var(--text-2)', fontSize: '0.9375rem', maxWidth: 360, textAlign: 'right' }}>
+            Real projects I've built to practice and demonstrate my frontend skills.
+          </p>
+        </motion.div>
+
+        {/* Editorial layout: featured large + secondary smaller */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          {featured && <FeaturedProject project={featured} onOpenModal={setSelected} />}
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+            {secondary.map(p => (
+              <SecondaryProject key={p.id} project={p} onOpenModal={setSelected} />
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* Modal */}
-      {selectedProject && (
-        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-      )}
+      <AnimatePresence>
+        {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,59 +1,55 @@
 // ============================================================
-// PORTFOLIO DATA — Single source of truth
+// PORTFOLIO DATA — Updated for redesign
 // ============================================================
 
 export const personalInfo = {
   name: 'Minh Le',
   title: 'Frontend Developer Intern',
-  subtitle: 'Second-year Information Technology student at FPT University',
+  subtitle: 'Second-year IT student at FPT University',
   description:
-    'Building responsive and user-friendly web experiences with JavaScript and ReactJS.',
+    'I build responsive, user-friendly web apps with ReactJS and modern JavaScript. Currently seeking a Frontend Developer Internship to grow through real-world projects.',
   university: 'FPT University',
   degree: 'Bachelor of Information Technology',
   major: 'Software Engineering',
   educationPeriod: 'September 2024 – Present',
-  status: 'Second-year Information Technology student',
+  status: 'Second-year IT student',
   careerDirection: 'Frontend Development',
   english: 'IELTS 6.0',
   github: 'https://github.com/minhthien435',
+  githubHandle: 'minhthien435',
 };
 
-export const aboutText = `I'm a second-year Information Technology student at FPT University with a strong interest in Frontend Development. I enjoy building responsive and user-friendly web applications using JavaScript and ReactJS. I'm continuously improving my skills through coursework, personal projects, and self-learning, and I'm currently looking for opportunities to grow as a Frontend Developer.`;
+export const aboutText = `I'm a second-year Information Technology student at FPT University, passionate about Frontend Development. I enjoy turning ideas into real, usable interfaces using ReactJS and modern web technologies. I'm always learning, always building.`;
 
 export const careerObjective = {
   goal: 'Become a Frontend Developer.',
   lookingFor: 'Frontend Developer Internship',
   reasons: [
-    'Gain practical experience',
+    'Gain practical, real-world experience',
     'Improve ReactJS and JavaScript skills',
     'Learn from experienced developers',
-    'Work on real-world projects',
-    'Understand professional software development workflows',
+    'Understand professional software workflows',
   ],
 };
 
-export const skills = [
-  {
-    category: 'Frontend',
-    items: ['HTML5', 'CSS3', 'JavaScript (ES6+)'],
-    icon: 'code',
-  },
-  {
-    category: 'Frameworks & Libraries',
-    items: ['ReactJS', 'Bootstrap', 'Tailwind CSS', 'React Router', 'Axios'],
-    icon: 'layers',
-  },
-  {
-    category: 'Version Control',
-    items: ['Git', 'GitHub'],
-    icon: 'git',
-  },
-  {
-    category: 'Language',
-    items: ['English – IELTS 6.0'],
-    icon: 'globe',
-  },
-];
+export const skills = {
+  frontend: [
+    { name: 'HTML5',      color: 'rose'   },
+    { name: 'CSS3',       color: 'cyan'   },
+    { name: 'JavaScript', color: 'yellow' },
+    { name: 'ReactJS',    color: 'violet' },
+    { name: 'Bootstrap',  color: 'violet' },
+  ],
+  tools: [
+    { name: 'Git',    color: 'rose'  },
+    { name: 'GitHub', color: 'gray'  },
+    { name: 'VS Code',color: 'cyan'  },
+  ],
+  learning: [
+    { name: 'TypeScript', color: 'cyan'   },
+    { name: 'C# / .NET',  color: 'violet' },
+  ],
+};
 
 export const projects = [
   {
@@ -62,9 +58,10 @@ export const projects = [
     period: 'June 2026 – July 2026',
     role: 'Frontend Developer',
     type: 'Team Project',
+    featured: true,
     description:
-      'A smart and automated parking management system designed to support parking management workflows from administration to customers.',
-    shortDesc: 'Smart automated parking management system with ANPR and booking features.',
+      'A smart automated parking management system supporting workflows from administration to customers — including ANPR, booking, payment, and role-based access.',
+    shortDesc: 'Smart parking management with ANPR, booking, and real-time floor visualization.',
     myContribution: [
       'Developed responsive user interfaces using ReactJS and Tailwind CSS',
       'Implemented navigation and routing using React Router',
@@ -76,16 +73,17 @@ export const projects = [
       'Parking slot management',
       'Advance parking booking',
       'Quick payment',
-      'Visual parking floor and slot overview',
+      'Visual parking floor overview',
       'User authentication',
       'Role-based access control',
       'Incident management',
       'Dynamic pricing',
     ],
-    techStack: ['ReactJS', 'Tailwind CSS', 'React Router', 'Axios', 'JavaScript', 'Git/GitHub'],
+    techStack: ['ReactJS', 'Tailwind CSS', 'React Router', 'Axios', 'JavaScript'],
     github: 'https://github.com/minhthien435',
     liveDemo: 'https://eparking-v1.vercel.app/',
     hasLiveDemo: true,
+    accentColor: 'violet',
   },
   {
     id: 'todo',
@@ -93,26 +91,25 @@ export const projects = [
     period: 'May 2026',
     role: 'Frontend Developer',
     type: 'Personal Project',
-    description: 'A simple and responsive Todo List application for managing daily tasks.',
-    shortDesc: 'Responsive task manager with CRUD operations and Local Storage persistence.',
+    featured: false,
+    description: 'A clean, responsive Todo List application for managing daily tasks with full CRUD and Local Storage persistence.',
+    shortDesc: 'Task manager with CRUD, filtering, and Local Storage.',
     myContribution: [
-      'Built the UI using HTML5 and CSS3',
-      'Implemented application logic using JavaScript (ES6+)',
-      'Implemented CRUD operations (Create, Read, Update, Delete)',
-      'Implemented task filtering by status',
-      'Implemented Local Storage persistence',
+      'Built the full UI using HTML5 and CSS3',
+      'Implemented all application logic in JavaScript (ES6+)',
+      'Built CRUD operations and task filtering',
+      'Local Storage for data persistence',
     ],
     features: [
-      'Create tasks',
-      'Read and display tasks',
-      'Update task status',
-      'Delete tasks',
-      'Filter tasks by All, Active, and Completed',
-      'Persist data using Local Storage',
+      'Create, read, update, delete tasks',
+      'Filter by All / Active / Completed',
+      'Local Storage persistence',
+      'Responsive design',
     ],
     techStack: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Local Storage'],
     github: 'https://github.com/minhthien435',
     hasLiveDemo: false,
+    accentColor: 'cyan',
   },
 ];
 
@@ -122,34 +119,28 @@ export const certifications = [
     institution: 'University of Michigan',
     platform: 'Coursera',
     completed: 'July 28, 2025',
+    color: 'violet',
   },
   {
     name: 'Software Engineering Specialization',
     institution: 'University of Alberta',
     platform: 'Coursera',
     completed: 'March 22, 2026',
+    color: 'cyan',
   },
   {
     name: 'User Experience Research and Design Specialization',
     institution: 'University of Michigan',
     platform: 'Coursera',
     completed: '2026',
+    color: 'yellow',
   },
 ];
 
-export const honors = [
-  {
-    medal: 'Silver Medal',
-    event: 'Vovinam Musical Martial Arts',
-    competition: 'Vovinam / Võ nhạc competition',
-    organizer: 'FPT University',
-    date: 'August 2025',
-    note: 'Personal achievement demonstrating discipline, teamwork, and commitment.',
-  },
-];
-
-export const contact = {
-  message:
-    'Interested in working together or discussing a project? Feel free to get in touch.',
-  github: 'https://github.com/minhthien435',
+export const achievement = {
+  medal: 'Silver Award',
+  event: 'Võ nhạc (Vovinam Musical Martial Arts) Competition',
+  organizer: 'FPT University',
+  date: 'August 2025',
+  note: 'Demonstrates discipline, teamwork, and commitment to excellence.',
 };

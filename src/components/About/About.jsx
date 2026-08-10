@@ -1,194 +1,218 @@
-import { useScrollAnimation } from '../../hooks/useScrollAnimation';
+import { motion } from 'framer-motion';
+import { GraduationCap, Target, Globe, Sparkles } from 'lucide-react';
 import { personalInfo, aboutText, careerObjective } from '../../data/portfolio';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+
+const reveal = {
+  hidden:  { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+};
+
+function BentoCell({ children, style = {}, className = '', delay = 0 }) {
+  const reduced = useReducedMotion();
+  return (
+    <motion.div
+      variants={reveal}
+      initial={reduced ? false : 'hidden'}
+      whileInView={reduced ? false : 'visible'}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay }}
+      style={style}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export default function About() {
-  const leftRef = useScrollAnimation();
-  const rightRef = useScrollAnimation();
-
   return (
-    <section id="about" aria-label="About Me">
-      <div className="section-divider" />
-      <div className="section-wrapper">
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '4rem',
-            alignItems: 'start',
-          }}
+    <section id="about" aria-label="About Me" style={{ background: 'var(--bg-cream)' }}>
+      <div className="divider" />
+      <div className="container section-gap">
+        {/* Header */}
+        <motion.div
+          variants={reveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          style={{ marginBottom: '2.5rem' }}
         >
-          {/* Left: Avatar + info card */}
-          <div ref={leftRef} className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-            {/* Avatar placeholder */}
-            <div
-              style={{
-                width: '100%',
-                maxWidth: 300,
-                aspectRatio: '4/5',
-                borderRadius: '1.25rem',
-                background: 'linear-gradient(135deg, #1a2040 0%, #0d1427 100%)',
-                border: '1px solid var(--color-border)',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'relative',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Decorative circles */}
+          <p className="section-eyebrow">Who I Am</p>
+          <h2 className="headline" style={{ marginTop: '0.5rem' }}>About Me</h2>
+        </motion.div>
+
+        {/* BENTO GRID */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gridTemplateRows: 'auto',
+          gap: '1rem',
+        }}>
+
+          {/* Cell 1 — Bio (large, spans 2 cols) */}
+          <BentoCell
+            delay={0}
+            style={{
+              gridColumn: 'span 2',
+              background: 'var(--bg-white)',
+              border: '1.5px solid var(--border)',
+              borderRadius: 'var(--r-xl)',
+              padding: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1.25rem',
+            }}
+          >
+            {/* Avatar + name row */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
               <div style={{
-                position: 'absolute', top: -40, right: -40,
-                width: 180, height: 180, borderRadius: '50%',
-                background: 'rgba(99,102,241,0.08)',
-              }} />
-              <div style={{
-                position: 'absolute', bottom: -30, left: -30,
-                width: 140, height: 140, borderRadius: '50%',
-                background: 'rgba(99,102,241,0.06)',
-              }} />
-              {/* Initials avatar */}
-              <div
-                style={{
-                  width: 90,
-                  height: 90,
-                  borderRadius: '50%',
-                  background: 'var(--color-accent)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '2rem',
-                  fontWeight: 800,
-                  color: '#fff',
-                  marginBottom: '1rem',
-                  zIndex: 1,
-                }}
-              >
+                width: 64, height: 64, borderRadius: '50%',
+                background: 'var(--violet)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 800, fontSize: '1.25rem', color: 'white',
+                flexShrink: 0,
+                boxShadow: 'var(--shadow-violet)',
+              }}>
                 ML
               </div>
-              <p style={{ color: 'var(--color-text-primary)', fontWeight: 700, fontSize: '1.125rem', zIndex: 1 }}>
-                {personalInfo.name}
-              </p>
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.875rem', zIndex: 1 }}>
-                {personalInfo.careerDirection}
-              </p>
+              <div>
+                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.125rem', color: 'var(--text)' }}>
+                  {personalInfo.name}
+                </h3>
+                <p style={{ color: 'var(--violet)', fontWeight: 600, fontSize: '0.875rem' }}>
+                  {personalInfo.careerDirection} · Student
+                </p>
+              </div>
             </div>
-
-            {/* Info chips */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              {[
-                { label: 'University', value: personalInfo.university },
-                { label: 'Major', value: personalInfo.major },
-                { label: 'Period', value: personalInfo.educationPeriod },
-                { label: 'English', value: personalInfo.english },
-              ].map(({ label, value }) => (
-                <div
-                  key={label}
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    padding: '0.6rem 0.875rem',
-                    borderRadius: '0.6rem',
-                    background: 'var(--color-bg-card)',
-                    border: '1px solid var(--color-border-subtle)',
-                    gap: '1rem',
-                  }}
-                >
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8125rem', fontWeight: 500, flexShrink: 0 }}>
-                    {label}
-                  </span>
-                  <span style={{ color: 'var(--color-text-primary)', fontSize: '0.8125rem', fontWeight: 600, textAlign: 'right' }}>
-                    {value}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: Text */}
-          <div ref={rightRef} className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
-            <div>
-              <p className="section-label">Who I Am</p>
-              <h2 className="section-title">About Me</h2>
-            </div>
-
-            <p
-              style={{
-                color: 'var(--color-text-secondary)',
-                lineHeight: 1.85,
-                fontSize: '1rem',
-              }}
-            >
+            <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1rem' }}>
               {aboutText}
             </p>
-
-            {/* Career Objective */}
-            <div
-              style={{
-                padding: '1.25rem',
-                borderRadius: '0.875rem',
-                border: '1px solid var(--color-border)',
-                background: 'var(--color-accent-dim)',
-              }}
-            >
-              <p
-                style={{
-                  color: 'var(--color-accent-hover)',
-                  fontWeight: 700,
-                  fontSize: '0.875rem',
-                  marginBottom: '0.75rem',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                }}
-              >
-                🎯 Currently Looking For
-              </p>
-              <p style={{ color: 'var(--color-text-primary)', fontWeight: 600, marginBottom: '0.875rem' }}>
-                {careerObjective.lookingFor}
-              </p>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                {careerObjective.reasons.map((r) => (
-                  <li
-                    key={r}
-                    style={{
-                      color: 'var(--color-text-secondary)',
-                      fontSize: '0.875rem',
-                      display: 'flex',
-                      gap: '0.5rem',
-                      alignItems: 'flex-start',
-                    }}
-                  >
-                    <span style={{ color: 'var(--color-accent)', fontWeight: 700, flexShrink: 0 }}>›</span>
-                    {r}
-                  </li>
-                ))}
-              </ul>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <span className="tag tag-violet">ReactJS</span>
+              <span className="tag tag-cyan">JavaScript</span>
+              <span className="tag tag-yellow">HTML / CSS</span>
             </div>
+          </BentoCell>
 
-            {/* CTA */}
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <a
-                href={personalInfo.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-primary"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-                </svg>
-                GitHub Profile
-              </a>
-              <button
-                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-                className="btn-outline"
-              >
-                View Projects
-              </button>
+          {/* Cell 2 — University card (1 col) */}
+          <BentoCell
+            delay={0.1}
+            style={{
+              background: 'var(--violet)',
+              borderRadius: 'var(--r-xl)',
+              padding: '1.75rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              color: 'white',
+              minHeight: 180,
+            }}
+          >
+            <GraduationCap size={28} color="rgba(255,255,255,0.7)" />
+            <div>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
+                FPT University
+              </p>
+              <p style={{ fontSize: '0.8125rem', opacity: 0.75 }}>Software Engineering</p>
+              <p style={{ fontSize: '0.75rem', opacity: 0.6, marginTop: '0.25rem' }}>{personalInfo.educationPeriod}</p>
             </div>
-          </div>
+          </BentoCell>
+
+          {/* Cell 3 — Career goal */}
+          <BentoCell
+            delay={0.15}
+            style={{
+              background: 'var(--yellow)',
+              borderRadius: 'var(--r-xl)',
+              padding: '1.75rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: 160,
+            }}
+          >
+            <Target size={24} color="#92400E" />
+            <div>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: '#78350F', marginBottom: '0.25rem' }}>
+                Career Goal
+              </p>
+              <p style={{ fontSize: '0.8125rem', color: '#92400E', lineHeight: 1.5 }}>
+                Frontend Developer — seeking internship to grow with real-world projects.
+              </p>
+            </div>
+          </BentoCell>
+
+          {/* Cell 4 — English */}
+          <BentoCell
+            delay={0.2}
+            style={{
+              background: 'var(--cyan-light)',
+              border: '1.5px solid #A5F3FC',
+              borderRadius: 'var(--r-xl)',
+              padding: '1.75rem',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              minHeight: 160,
+            }}
+          >
+            <Globe size={24} color="#0E7490" />
+            <div>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: '#0E7490' }}>
+                IELTS 6.0
+              </p>
+              <p style={{ fontSize: '0.8125rem', color: '#0E7490', opacity: 0.8 }}>English Proficiency</p>
+            </div>
+          </BentoCell>
+
+          {/* Cell 5 — Internship seeking */}
+          <BentoCell
+            delay={0.25}
+            style={{
+              gridColumn: 'span 2',
+              background: 'var(--bg-white)',
+              border: '1.5px solid var(--border)',
+              borderRadius: 'var(--r-xl)',
+              padding: '1.75rem',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+              <div style={{
+                width: 42, height: 42, borderRadius: 12,
+                background: 'var(--green-light)', border: '1.5px solid #A7F3D0',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                flexShrink: 0,
+              }}>
+                <Sparkles size={20} color="#065F46" />
+              </div>
+              <div>
+                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)', marginBottom: '0.5rem' }}>
+                  Currently Looking For
+                </p>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.875rem', lineHeight: 1.7 }}>
+                  A <strong>Frontend Developer Internship</strong> where I can contribute, learn from senior developers, and work on real-world products.
+                </p>
+                <ul style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                  {careerObjective.reasons.map(r => (
+                    <li key={r} style={{ listStyle: 'none' }}>
+                      <span className="tag tag-green" style={{ fontSize: '0.75rem' }}>✓ {r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </BentoCell>
         </div>
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          #about .bento-override { grid-template-columns: 1fr !important; }
+          #about [style*="grid-column: span 2"] { grid-column: span 1 !important; }
+        }
+      `}</style>
     </section>
   );
 }
