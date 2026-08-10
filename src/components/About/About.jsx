@@ -114,16 +114,63 @@ export default function About() {
               flexDirection: 'column',
               justifyContent: 'space-between',
               color: 'white',
-              minHeight: 180,
+              minHeight: 190,
+              position: 'relative',
+              overflow: 'hidden',
+              boxShadow: 'var(--shadow-violet)',
             }}
           >
-            <GraduationCap size={28} color="rgba(255,255,255,0.7)" />
-            <div>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1rem', marginBottom: '0.25rem' }}>
-                FPT University
+            {/* Background subtle watermark icon */}
+            <div style={{
+              position: 'absolute', right: '-10px', bottom: '-10px',
+              opacity: 0.12, pointerEvents: 'none', transform: 'rotate(-10deg)',
+            }}>
+              <GraduationCap size={130} color="white" />
+            </div>
+
+            {/* Top Row: Icon + Badge */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', zIndex: 1 }}>
+              <div style={{
+                width: 40, height: 40, borderRadius: 12,
+                background: 'rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(4px)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}>
+                <GraduationCap size={22} color="white" />
+              </div>
+              <span style={{
+                fontSize: '0.7rem', fontWeight: 700,
+                padding: '0.2rem 0.65rem', borderRadius: 99,
+                background: 'rgba(255,255,255,0.18)',
+                color: 'white', letterSpacing: '0.04em',
+                backdropFilter: 'blur(4px)',
+              }}>
+                2nd Year
+              </span>
+            </div>
+
+            {/* Bottom Content */}
+            <div style={{ zIndex: 1, marginTop: '1rem' }}>
+              <p style={{
+                fontSize: '0.72rem', fontWeight: 600,
+                textTransform: 'uppercase', letterSpacing: '0.08em',
+                opacity: 0.8, marginBottom: '0.25rem',
+              }}>
+                Education
               </p>
-              <p style={{ fontSize: '0.8125rem', opacity: 0.75 }}>Software Engineering</p>
-              <p style={{ fontSize: '0.75rem', opacity: 0.6, marginTop: '0.25rem' }}>{personalInfo.educationPeriod}</p>
+              <h3 style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700, fontSize: '1.25rem',
+                color: 'white', lineHeight: 1.2, marginBottom: '0.35rem',
+              }}>
+                FPT University
+              </h3>
+              <p style={{ fontSize: '0.85rem', opacity: 0.9, fontWeight: 500 }}>
+                Software Engineering
+              </p>
+              <p style={{ fontSize: '0.75rem', opacity: 0.7, marginTop: '0.2rem' }}>
+                Bachelor of IT · {personalInfo.educationPeriod}
+              </p>
             </div>
           </BentoCell>
 
