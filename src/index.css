@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ============================================================
-   DESIGN TOKENS — Light Playful Developer Portfolio
+   DESIGN TOKENS — Light Theme
    ============================================================ */
 :root {
   /* Backgrounds */
@@ -21,6 +21,19 @@
   --rose-light:   #FFE4E6;
   --green:        #10B981;
   --green-light:  #D1FAE5;
+
+  /* Theme-aware Accent Text & Border Colors */
+  --cyan-text:    #0E7490;
+  --cyan-border:  #A5F3FC;
+  --yellow-text:  #B45309;
+  --yellow-border: #FDE68A;
+  --rose-text:    #BE123C;
+  --rose-border:  #FECDD3;
+  --green-text:   #065F46;
+  --green-border: #A7F3D0;
+  --gray-bg:      #F5F5F4;
+  --gray-text:    #57534E;
+  --gray-border:  #E7E5E4;
 
   /* Text */
   --text:         #1C1917;
@@ -45,12 +58,69 @@
 }
 
 /* ============================================================
+   DESIGN TOKENS — Dark Theme
+   ============================================================ */
+[data-theme="dark"] {
+  /* Backgrounds */
+  --bg:           #0F0E17;
+  --bg-cream:     #171523;
+  --bg-white:     #1E1C2E;
+
+  /* Brand colors stay vibrant in dark mode */
+  --violet:       #A78BFA;
+  --violet-light: #2D1F6E;
+  --violet-mid:   #4C309B;
+  --cyan:         #38BDF8;
+  --cyan-light:   #0C3A4A;
+  --yellow:       #FBBF24;
+  --yellow-light: #3A2E00;
+  --rose:         #FB7185;
+  --rose-light:   #3B1219;
+  --green:        #34D399;
+  --green-light:  #052E1C;
+
+  /* Theme-aware Accent Text & Border Colors in Dark Mode */
+  --cyan-text:    #67E8F9;
+  --cyan-border:  rgba(56, 189, 248, 0.35);
+  --yellow-text:  #FDE047;
+  --yellow-border: rgba(251, 191, 36, 0.35);
+  --rose-text:    #FDA4AF;
+  --rose-border:  rgba(251, 113, 133, 0.35);
+  --green-text:   #6EE7B7;
+  --green-border: rgba(52, 211, 153, 0.35);
+  --gray-bg:      rgba(255, 255, 255, 0.06);
+  --gray-text:    #D6D3D1;
+  --gray-border:  rgba(255, 255, 255, 0.12);
+
+  /* Text */
+  --text:         #F5F3F0;
+  --text-2:       #C4BEB8;
+  --text-3:       #8E857F;
+  --text-inv:     #0F0E17;
+
+  /* Borders & Shadows (lighter in dark mode) */
+  --border:       rgba(245, 243, 240, 0.09);
+  --border-md:    rgba(245, 243, 240, 0.16);
+  --shadow-sm:    0 1px 3px rgba(0,0,0,0.30), 0 1px 2px rgba(0,0,0,0.20);
+  --shadow-md:    0 4px 16px rgba(0,0,0,0.40), 0 2px 6px rgba(0,0,0,0.20);
+  --shadow-lg:    0 12px 40px rgba(0,0,0,0.50), 0 4px 12px rgba(0,0,0,0.30);
+  --shadow-violet: 0 8px 32px rgba(139,92,246,0.30);
+}
+
+
+/* ============================================================
    RESET & BASE
    ============================================================ */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 html {
@@ -65,6 +135,11 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  width: 100%;
   overflow-x: hidden;
 }
 
@@ -97,6 +172,29 @@ body.has-custom-cursor summary {
 }
 
 /* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+.typing-cursor {
+  display: inline-block;
+  font-weight: 300;
+  color: var(--violet);
+  animation: cursor-blink 0.85s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes particle-float {
+  0%   { transform: translateY(0px)  rotate(0deg);   opacity: 0.5; }
+  33%  { transform: translateY(-18px) rotate(120deg); opacity: 0.8; }
+  66%  { transform: translateY(-8px)  rotate(240deg); opacity: 0.5; }
+  100% { transform: translateY(0px)  rotate(360deg); opacity: 0.5; }
+}
+
+
+/* ============================================================
    SCROLLBAR
    ============================================================ */
 ::-webkit-scrollbar { width: 6px; }
@@ -120,7 +218,7 @@ h1, h2, h3, h4, h5, h6 {
 .display {
   font-family: 'Space Grotesk', system-ui, sans-serif;
   font-weight: 700;
-  font-size: clamp(3.5rem, 10vw, 7.5rem);
+  font-size: clamp(2.75rem, 10vw, 7.5rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
 }
@@ -160,6 +258,24 @@ h1, h2, h3, h4, h5, h6 {
   max-width: 1160px;
   margin: 0 auto;
   padding: 0 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1.125rem;
+  }
+  .section-gap {
+    padding: 3.5rem 0;
+  }
+  .section-gap-sm {
+    padding: 2.5rem 0;
+  }
 }
 
 .section-gap {
@@ -209,12 +325,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-outline {
-  background: var(--bg-white);
+  background: rgba(255,255,255,0.06);
   color: var(--text);
   border: 1.5px solid var(--border-md);
   box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .btn-outline:hover {
+  background: rgba(124,58,237,0.08);
   border-color: var(--violet);
   color: var(--violet);
   transform: translateY(-2px);
@@ -233,6 +352,32 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--violet);
   background: var(--violet-light);
 }
+
+/* Glass CTA button — glassmorphism style */
+.btn-glass {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--text);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.btn-glass:hover {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: var(--violet-mid);
+  color: var(--violet);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(124,58,237,0.15), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+[data-theme="dark"] .btn-glass {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+[data-theme="dark"] .btn-glass:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: var(--violet-mid);
+}
+
 
 /* ============================================================
    CARDS
@@ -286,33 +431,34 @@ h1, h2, h3, h4, h5, h6 {
 
 .tag-cyan {
   background: var(--cyan-light);
-  color: #0E7490;
-  border-color: #A5F3FC;
+  color: var(--cyan-text);
+  border-color: var(--cyan-border);
 }
 
 .tag-yellow {
   background: var(--yellow-light);
-  color: #92400E;
-  border-color: #FDE68A;
+  color: var(--yellow-text);
+  border-color: var(--yellow-border);
 }
 
 .tag-rose {
   background: var(--rose-light);
-  color: #BE123C;
-  border-color: #FECDD3;
+  color: var(--rose-text);
+  border-color: var(--rose-border);
 }
 
 .tag-green {
   background: var(--green-light);
-  color: #065F46;
-  border-color: #A7F3D0;
+  color: var(--green-text);
+  border-color: var(--green-border);
 }
 
 .tag-gray {
-  background: #F5F5F4;
-  color: var(--text-2);
-  border-color: #E7E5E4;
+  background: var(--gray-bg);
+  color: var(--gray-text);
+  border-color: var(--gray-border);
 }
+
 
 /* ============================================================
    SECTION DIVIDER
@@ -448,6 +594,19 @@ h1, h2, h3, h4, h5, h6 {
   padding: 2.25rem;
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: 0.75rem;
+  }
+  .modal-box {
+    max-height: 92vh;
+    border-radius: var(--r-lg);
+  }
+  .modal-body {
+    padding: 1.25rem;
+  }
 }
 
 /* Custom Modal Scrollbar */

@@ -21,6 +21,7 @@ export default function GitHubSection() {
           initial={reduced ? false : 'hidden'}
           whileInView={reduced ? false : 'visible'}
           viewport={{ once: true }}
+          className="github-card"
           style={{
             background: 'var(--bg-white)',
             border: '1.5px solid var(--border)',
@@ -30,12 +31,12 @@ export default function GitHubSection() {
             alignItems: 'center',
             justifyContent: 'space-between',
             flexWrap: 'wrap',
-            gap: '2rem',
+            gap: '1.5rem',
             boxShadow: 'var(--shadow-sm)',
           }}
         >
           {/* Left */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+          <div className="github-profile" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
             {/* Real GitHub avatar */}
             <motion.div
               whileHover={{ scale: 1.05, rotate: -3 }}
@@ -71,10 +72,10 @@ export default function GitHubSection() {
           </div>
 
           {/* Right */}
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+          <div className="github-actions" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <motion.a
               whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.96 }}
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
@@ -98,6 +99,31 @@ export default function GitHubSection() {
           </div>
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 640px) {
+          .github-card {
+            padding: 1.5rem !important;
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .github-profile {
+            flex-direction: column !important;
+            text-align: center !important;
+          }
+          .github-profile .tag {
+            justify-content: center;
+          }
+          .github-actions {
+            flex-direction: column !important;
+            width: 100%;
+          }
+          .github-actions .btn {
+            justify-content: center;
+            width: 100%;
+          }
+        }
+      `}</style>
     </section>
   );
 }

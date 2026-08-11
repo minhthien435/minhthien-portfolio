@@ -34,6 +34,7 @@ export default function Achievement() {
           whileHover={{ y: -3, boxShadow: 'var(--shadow-md)' }}
           style={{
             maxWidth: 720,
+            width: '100%',
             background: 'var(--bg-white)',
             border: '1.5px solid var(--border)',
             borderRadius: 'var(--r-xl)',

@@ -6,7 +6,7 @@ import Mascot from '../../mascot/Mascot';
 export default function Footer() {
   return (
     <footer style={{ background: 'var(--bg)', borderTop: '1.5px solid var(--border)', padding: '1.75rem 0' }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+      <div className="container footer-inner">
         {/* Left */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
           <Mascot size={34} compact />
@@ -18,9 +18,9 @@ export default function Footer() {
         </div>
 
         {/* Right */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <p style={{ color: 'var(--text-3)', fontSize: '0.8125rem' }}>
-            Built with React + Vite + Tailwind
+        <div className="footer-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <p className="footer-built-with" style={{ color: 'var(--text-3)', fontSize: '0.8125rem' }}>
+            Built with React + Vite
           </p>
           <motion.a
             href={personalInfo.github}
@@ -36,6 +36,7 @@ export default function Footer() {
               border: '1.5px solid var(--border)',
               background: 'var(--bg-white)',
               transition: 'color 0.2s, border-color 0.2s',
+              whiteSpace: 'nowrap',
             }}
             onMouseEnter={e => { e.currentTarget.style.color = 'var(--violet)'; e.currentTarget.style.borderColor = 'var(--violet-mid)'; }}
             onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-2)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
@@ -44,6 +45,29 @@ export default function Footer() {
           </motion.a>
         </div>
       </div>
+
+      <style>{`
+        .footer-inner {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+        }
+        @media (max-width: 520px) {
+          .footer-inner {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+          }
+          .footer-right {
+            justify-content: center;
+          }
+          .footer-built-with {
+            display: none;
+          }
+        }
+      `}</style>
     </footer>
   );
 }

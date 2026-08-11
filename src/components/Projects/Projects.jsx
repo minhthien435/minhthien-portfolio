@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, ArrowUpRight, ChevronRight, Check, Plus } from 'lucide-react';
+import { ExternalLink, ArrowUpRight, ChevronRight, Check, Plus, Play, Pause } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { projects } from '../../data/portfolio';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import ProjectModal from './ProjectModal';
 import eparkingPreview from '../../assets/eparking-preview.png';
+import eparkingVideo from '../../assets/Projects.mp4';
 
 const reveal = {
   hidden:  { opacity: 0, y: 28 },
@@ -22,6 +23,7 @@ const handleSpotlight = (e) => {
 /* ── Featured Project (eParking) ── */
 function FeaturedProject({ project, onOpenModal }) {
   const reduced = useReducedMotion();
+  const [isPlaying, setIsPlaying] = useState(true);
 
   return (
     <motion.div
@@ -40,14 +42,10 @@ function FeaturedProject({ project, onOpenModal }) {
       }}
     >
       {/* Browser mockup header */}
-      <motion.div
-        whileHover={{ scale: 1.01 }}
-        transition={{ duration: 0.3 }}
-        onClick={() => onOpenModal(project)}
+      <div
         style={{
           background: 'linear-gradient(135deg, #1C1917 0%, #292524 100%)',
           padding: '0',
-          cursor: 'pointer',
           position: 'relative',
           overflow: 'hidden',
         }}
@@ -63,29 +61,59 @@ function FeaturedProject({ project, onOpenModal }) {
             flex: 1, margin: '0 0.75rem',
             background: 'rgba(255,255,255,0.07)', borderRadius: 6,
             padding: '0.3rem 0.75rem', fontSize: '0.75rem',
-            color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace',
+            color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           }}>
-            eparking-v1.vercel.app
+            <span>eparking-v1.vercel.app</span>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem', fontSize: '0.68rem', color: '#34D399', fontWeight: 600 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#34D399', animation: 'pulse-ring 2s infinite' }} />
+              Live Demo Video
+            </span>
           </div>
           <ExternalLink size={13} color="rgba(255,255,255,0.3)" />
         </div>
 
-        {/* Project Real Screenshot */}
-        <div style={{ height: 260, position: 'relative', overflow: 'hidden' }}>
-          <img
-            src={eparkingPreview}
-            alt="eParking Management System Interface"
+        {/* Video Player Container */}
+        <div
+          style={{
+            height: 320,
+            position: 'relative',
+            overflow: 'hidden',
+            background: '#0F0E17',
+            cursor: 'pointer',
+          }}
+          onClick={() => onOpenModal(project)}
+        >
+          <video
+            src={eparkingVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
             style={{
               width: '100%',
               height: '100%',
               objectFit: 'cover',
-              objectPosition: 'top left',
+              objectPosition: 'top center',
               display: 'block',
-              transition: 'transform 0.4s ease',
             }}
           />
+
+          {/* Top Glass Badge */}
+          <div style={{
+            position: 'absolute', top: '1rem', right: '1rem',
+            padding: '0.35rem 0.75rem', borderRadius: 99,
+            background: 'rgba(15, 14, 23, 0.65)',
+            backdropFilter: 'blur(8px)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            color: 'white', fontSize: '0.72rem', fontWeight: 600,
+            display: 'flex', alignItems: 'center', gap: '0.4rem',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+          }}>
+            <span>🎬 Auto Play</span>
+          </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Project info */}
       <div style={{ padding: '1.75rem' }}>
@@ -343,7 +371,7 @@ export default function Projects() {
             <p className="section-eyebrow">What I've Built</p>
             <h2 className="headline" style={{ marginTop: '0.5rem' }}>Projects</h2>
           </div>
-          <p style={{ color: 'var(--text-2)', fontSize: '0.9375rem', maxWidth: 360, textAlign: 'right' }}>
+          <p style={{ color: 'var(--text-2)', fontSize: '0.9375rem', maxWidth: 360 }}>
             Real projects I've built to practice and demonstrate my frontend skills.
           </p>
         </motion.div>
@@ -366,3 +394,4 @@ export default function Projects() {
     </section>
   );
 }
+

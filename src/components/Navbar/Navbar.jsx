@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, ArrowUp } from 'lucide-react';
+import { Menu, X, ArrowUp, Sun, Moon } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
+import { useTheme } from '../../hooks/useTheme';
 
 const navLinks = [
   { label: 'About',    href: '#about'          },
@@ -17,6 +18,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen]   = useState(false);
   const [active,   setActive]     = useState('');
   const [showTop,  setShowTop]    = useState(false);
+  const { isDark, toggleTheme }   = useTheme();
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
@@ -61,9 +63,10 @@ export default function Navbar() {
         top: 0, left: 0, right: 0,
         zIndex: 100,
         transition: 'background 0.3s, box-shadow 0.3s',
-        background: scrolled ? 'rgba(250,250,248,0.90)' : 'transparent',
+        background: scrolled ? 'rgba(var(--bg-rgb, 250,250,248), 0.92)' : 'transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
         boxShadow: scrolled ? '0 1px 0 var(--border)' : 'none',
+        backgroundColor: scrolled ? 'var(--bg)' : 'transparent',
       }}
     >
       {/* Scroll progress bar */}
@@ -147,6 +150,32 @@ export default function Navbar() {
             );
           })}
 
+          {/* Theme Toggle */}
+          <motion.button
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.9, rotate: 15 }}
+            onClick={toggleTheme}
+            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+            style={{
+              marginLeft: '0.5rem',
+              width: 36, height: 36, borderRadius: 10,
+              background: isDark ? 'var(--violet-light)' : 'var(--bg-cream)',
+              border: '1.5px solid var(--border-md)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: 'pointer', color: isDark ? 'var(--violet)' : 'var(--text-2)',
+              transition: 'background 0.2s, color 0.2s',
+            }}
+          >
+            <motion.div
+              key={isDark ? 'moon' : 'sun'}
+              initial={{ rotate: -30, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              transition={{ duration: 0.25 }}
+            >
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            </motion.div>
+          </motion.button>
+
           <motion.a
             href={personalInfo.github}
             target="_blank"
@@ -154,7 +183,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="btn btn-primary"
-            style={{ marginLeft: '0.75rem', padding: '0.5rem 1.1rem', fontSize: '0.875rem' }}
+            style={{ marginLeft: '0.5rem', padding: '0.5rem 1.1rem', fontSize: '0.875rem' }}
           >
             <GitHubIcon size={15} />
             GitHub
@@ -179,53 +208,147 @@ export default function Navbar() {
         </motion.button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — full-screen overlay */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            key="mobile-menu"
+            initial={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
+            exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             onClick={e => e.stopPropagation()}
             style={{
-              background: 'rgba(250,250,248,0.97)',
-              backdropFilter: 'blur(16px)',
-              borderTop: '1px solid var(--border)',
-              padding: '0.75rem 1.5rem 1.25rem',
-              display: 'flex', flexDirection: 'column', gap: '0.25rem',
+              position: 'fixed',
+              inset: 0,
+              zIndex: 200,
+              background: 'var(--bg)',
+              backdropFilter: 'blur(20px)',
+              display: 'flex',
+              flexDirection: 'column',
             }}
           >
-            {navLinks.map(link => (
+            {/* Menu header */}
+            <div style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '1.25rem 1.5rem',
+              borderBottom: '1px solid var(--border)',
+            }}>
+              {/* Logo in menu */}
               <a
-                key={link.href}
-                href={link.href}
-                onClick={e => scrollTo(e, link.href)}
+                href="#"
+                onClick={e => { e.preventDefault(); setMenuOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '0.625rem' }}
+              >
+                <div style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: 'var(--violet)',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontFamily: "'Space Grotesk', sans-serif",
+                  fontWeight: 700, fontSize: '0.875rem', color: 'white',
+                }}>
+                  ML
+                </div>
+                <span style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1rem', color: 'var(--text)', letterSpacing: '-0.02em' }}>
+                  Minh Le
+                </span>
+              </a>
+              {/* Close button */}
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setMenuOpen(false)}
+                aria-label="Close menu"
                 style={{
-                  padding: '0.65rem 0.875rem',
-                  borderRadius: 10,
-                  fontSize: '0.9375rem',
-                  fontWeight: 500,
-                  textDecoration: 'none',
-                  color: active === link.href.replace('#','') ? 'var(--violet)' : 'var(--text)',
-                  background: active === link.href.replace('#','') ? 'var(--violet-light)' : 'transparent',
+                  background: 'var(--bg-cream)', border: '1.5px solid var(--border)',
+                  borderRadius: 10, padding: '0.4rem',
+                  cursor: 'pointer', color: 'var(--text)',
+                  display: 'flex', alignItems: 'center',
                 }}
               >
-                {link.label}
-              </a>
-            ))}
-            <a
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{ marginTop: '0.5rem', justifyContent: 'center' }}
+                <X size={20} />
+              </motion.button>
+            </div>
+
+            {/* Nav links — centered, staggered */}
+            <nav style={{
+              flex: 1, display: 'flex', flexDirection: 'column',
+              alignItems: 'center', justifyContent: 'center', gap: '0.25rem',
+            }}>
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={e => scrollTo(e, link.href)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.5,
+                    ease: [0.16, 1, 0.3, 1],
+                    delay: 0.12 + i * 0.06,
+                  }}
+                  whileHover={{ x: 6 }}
+                  style={{
+                    padding: '0.75rem 2rem',
+                    borderRadius: 12,
+                    fontSize: '1.5rem',
+                    fontFamily: "'Space Grotesk', sans-serif",
+                    fontWeight: 600,
+                    letterSpacing: '-0.02em',
+                    textDecoration: 'none',
+                    color: active === link.href.replace('#', '') ? 'var(--violet)' : 'var(--text)',
+                    background: active === link.href.replace('#', '') ? 'var(--violet-light)' : 'transparent',
+                    width: '100%',
+                    maxWidth: 280,
+                    textAlign: 'center',
+                    transition: 'background 0.2s',
+                  }}
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
+
+            {/* Bottom actions */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.12 + navLinks.length * 0.06 }}
+              style={{
+                padding: '1.25rem 1.5rem 2rem',
+                borderTop: '1px solid var(--border)',
+                display: 'flex', flexDirection: 'column', gap: '0.75rem',
+              }}
             >
-              <GitHubIcon size={16} /> GitHub
-            </a>
+              {/* Theme toggle */}
+              <button
+                onClick={toggleTheme}
+                style={{
+                  padding: '0.75rem 1rem', borderRadius: 12,
+                  border: '1.5px solid var(--border)',
+                  background: 'var(--bg-cream)',
+                  color: 'var(--text)', fontSize: '0.9375rem', fontWeight: 500,
+                  cursor: 'pointer', display: 'flex', alignItems: 'center',
+                  gap: '0.5rem', justifyContent: 'center',
+                }}
+              >
+                {isDark ? <Sun size={17} /> : <Moon size={17} />}
+                {isDark ? 'Light Mode' : 'Dark Mode'}
+              </button>
+              {/* GitHub CTA */}
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary"
+                style={{ justifyContent: 'center' }}
+              >
+                <GitHubIcon size={16} /> GitHub
+              </a>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
+
 
       <style>{`
         @media (max-width: 700px) {

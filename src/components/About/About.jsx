@@ -45,18 +45,13 @@ export default function About() {
         </motion.div>
 
         {/* BENTO GRID */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gridTemplateRows: 'auto',
-          gap: '1rem',
-        }}>
+        <div className="bento-grid-container">
 
           {/* Cell 1 — Bio (large, spans 2 cols) */}
           <BentoCell
             delay={0}
+            className="bento-span-2"
             style={{
-              gridColumn: 'span 2',
               background: 'var(--bg-white)',
               border: '1.5px solid var(--border)',
               borderRadius: 'var(--r-xl)',
@@ -182,7 +177,8 @@ export default function About() {
           <BentoCell
             delay={0.15}
             style={{
-              background: 'var(--yellow)',
+              background: 'var(--yellow-light)',
+              border: '1.5px solid var(--yellow-border)',
               borderRadius: 'var(--r-xl)',
               padding: '1.75rem',
               display: 'flex',
@@ -191,12 +187,12 @@ export default function About() {
               minHeight: 160,
             }}
           >
-            <Target size={24} color="#92400E" />
+            <Target size={24} color="var(--yellow-text)" />
             <div>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: '#78350F', marginBottom: '0.25rem' }}>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: 'var(--yellow-text)', marginBottom: '0.25rem' }}>
                 Career Goal
               </p>
-              <p style={{ fontSize: '0.8125rem', color: '#92400E', lineHeight: 1.5 }}>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--yellow-text)', lineHeight: 1.5, opacity: 0.9 }}>
                 Frontend Developer — seeking internship to grow with real-world projects.
               </p>
             </div>
@@ -207,7 +203,7 @@ export default function About() {
             delay={0.2}
             style={{
               background: 'var(--cyan-light)',
-              border: '1.5px solid #A5F3FC',
+              border: '1.5px solid var(--cyan-border)',
               borderRadius: 'var(--r-xl)',
               padding: '1.75rem',
               display: 'flex',
@@ -216,20 +212,20 @@ export default function About() {
               minHeight: 160,
             }}
           >
-            <Globe size={24} color="#0E7490" />
+            <Globe size={24} color="var(--cyan-text)" />
             <div>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: '#0E7490' }}>
+              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.5rem', color: 'var(--cyan-text)' }}>
                 IELTS 6.0
               </p>
-              <p style={{ fontSize: '0.8125rem', color: '#0E7490', opacity: 0.8 }}>English Proficiency</p>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--cyan-text)', opacity: 0.85 }}>English Proficiency</p>
             </div>
           </BentoCell>
 
           {/* Cell 5 — Internship seeking */}
           <BentoCell
             delay={0.25}
+            className="bento-span-2"
             style={{
-              gridColumn: 'span 2',
               background: 'var(--bg-white)',
               border: '1.5px solid var(--border)',
               borderRadius: 'var(--r-xl)',
@@ -266,10 +262,26 @@ export default function About() {
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #about .bento-override { grid-template-columns: 1fr !important; }
-          #about [style*="grid-column: span 2"] { grid-column: span 1 !important; }
-          .about-mascot { display: none !important; }
+        .bento-grid-container {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1rem;
+        }
+        .bento-span-2 {
+          grid-column: span 2;
+        }
+        @media (max-width: 900px) {
+          .bento-grid-container {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .bento-grid-container {
+            grid-template-columns: 1fr !important;
+          }
+          .bento-span-2 {
+            grid-column: span 1 !important;
+          }
         }
       `}</style>
     </section>

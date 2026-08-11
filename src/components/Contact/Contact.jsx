@@ -62,7 +62,7 @@ export default function Contact() {
           </div>
 
           {/* Contact card container */}
-          <div style={{
+          <div className="contact-card-container" style={{
             width: '100%',
             background: 'var(--bg-white)',
             border: '1.5px solid var(--border)',
@@ -128,13 +128,13 @@ export default function Contact() {
             </motion.a>
 
             {/* Quick Actions */}
-            <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <div className="contact-quick-actions" style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={handleSendEmail}
                 className="btn btn-primary"
-                style={{ flex: 1, minWidth: 160, justifyContent: 'center' }}
+                style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
               >
                 <Mail size={16} /> Open Web Gmail
               </motion.button>
@@ -144,7 +144,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.96 }}
                 onClick={handleCopyEmail}
                 className="btn btn-outline"
-                style={{ flex: 1, minWidth: 160, justifyContent: 'center' }}
+                style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
               >
                 {copied ? <Check size={16} color="var(--green)" /> : <Copy size={16} />}
                 {copied ? 'Copied Email!' : 'Copy Email'}
@@ -153,6 +153,21 @@ export default function Contact() {
           </div>
         </motion.div>
       </div>
+
+      <style>{`
+        @media (max-width: 520px) {
+          .contact-card-container {
+            padding: 1.125rem !important;
+          }
+          .contact-quick-actions {
+            flex-direction: column !important;
+          }
+          .contact-quick-actions .btn {
+            width: 100% !important;
+            min-width: 0 !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
