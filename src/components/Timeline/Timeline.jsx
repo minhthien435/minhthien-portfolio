@@ -1,7 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+
+import ieltsLogo from '../../assets/ielts-logo.png';
+import fptLogo from '../../assets/fpt-logo.png';
+import todoIcon from '../../assets/todo-icon.png';
+import eparkingLogo from '../../assets/eparking-logo.png';
+import jamwaveLogo from '../../assets/jamwave-logo.jpg';
 
 /* ─── Timeline Data ─────────────────────────────────────────── */
 const milestones = [
@@ -11,6 +16,9 @@ const milestones = [
     phase: 'Foundation',
     title: 'IELTS 6.0 Achieved',
     icon: '🌐',
+    image: ieltsLogo,
+    imageFit: 'contain',
+    imagePadding: '6px',
     accent: 'cyan',
     tags: ['English', 'Communication'],
     bullets: [
@@ -25,6 +33,9 @@ const milestones = [
     phase: 'University',
     title: 'Started at FPT University',
     icon: '🎓',
+    image: fptLogo,
+    imageFit: 'contain',
+    imagePadding: '4px',
     accent: 'violet',
     tags: ['FPT University', 'Software Engineering', 'IT'],
     bullets: [
@@ -39,6 +50,9 @@ const milestones = [
     phase: 'First Project',
     title: 'Todo App — First Frontend Project',
     icon: '⚛️',
+    image: todoIcon,
+    imageFit: 'contain',
+    imagePadding: '2px',
     accent: 'yellow',
     tags: ['HTML5', 'CSS3', 'JavaScript', 'ES6+', 'LocalStorage'],
     bullets: [
@@ -53,6 +67,9 @@ const milestones = [
     phase: 'Real-world Project',
     title: 'eParking Management System',
     icon: '🚗',
+    image: eparkingLogo,
+    imageFit: 'contain',
+    imagePadding: '4px',
     accent: 'green',
     tags: ['ReactJS', 'JavaScript', 'Responsive UI', 'Full Stack'],
     bullets: [
@@ -67,6 +84,9 @@ const milestones = [
     phase: 'Featured Project',
     title: 'JamWave – Music Streaming Web Platform',
     icon: '🎵',
+    image: jamwaveLogo,
+    imageFit: 'cover',
+    imagePadding: '0px',
     accent: 'violet',
     tags: ['ReactJS', 'Zustand', 'REST APIs', 'Audio Engine', 'AI Integration'],
     bullets: [
@@ -208,14 +228,30 @@ function TimelineCard({ item, isLeft, index }) {
 
         {/* Header row */}
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
-          {/* Icon */}
+          {/* Icon Image */}
           <div style={{
-            width: 50, height: 50, borderRadius: 14,
-            background: c.bg, border: `1.5px solid ${c.border}`,
+            width: 52, height: 52, borderRadius: 14,
+            background: 'var(--bg-white)',
+            border: `1.5px solid ${c.border}`,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '1.5rem', flexShrink: 0,
+            flexShrink: 0, overflow: 'hidden',
+            boxShadow: 'var(--shadow-sm)',
+            padding: item.imagePadding || '4px',
           }}>
-            {item.icon}
+            {item.image ? (
+              <img
+                src={item.image}
+                alt={item.title}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: item.imageFit || 'contain',
+                  borderRadius: item.imageRadius || 8,
+                }}
+              />
+            ) : (
+              <span style={{ fontSize: '1.5rem' }}>{item.icon}</span>
+            )}
           </div>
 
           <div style={{ flex: 1, minWidth: 0 }}>
