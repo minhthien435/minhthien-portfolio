@@ -18,6 +18,8 @@ export const personalInfo = {
   email: 'minhjordanlenguyen@gmail.com',
   github: 'https://github.com/minhthien435',
   githubHandle: 'minhthien435',
+  cvUrl: '/SE203908_LÊ NGUYỄN THIÊN MINH.pdf',
+  cvFilename: 'SE203908_LÊ_NGUYỄN_THIÊN_MINH.pdf',
 };
 
 export const aboutText = `I'm a second-year Information Technology student at FPT University, passionate about Frontend Development. I enjoy turning ideas into real, usable interfaces using ReactJS and modern web technologies. I'm always learning, always building.`;
@@ -35,11 +37,12 @@ export const careerObjective = {
 
 export const skills = {
   frontend: [
-    { name: 'HTML5',      color: 'rose'   },
-    { name: 'CSS3',       color: 'cyan'   },
-    { name: 'JavaScript', color: 'yellow' },
-    { name: 'ReactJS',    color: 'violet' },
-    { name: 'Bootstrap',  color: 'violet' },
+    { name: 'HTML5',        color: 'rose'   },
+    { name: 'CSS3',         color: 'cyan'   },
+    { name: 'JavaScript',   color: 'yellow' },
+    { name: 'ReactJS',      color: 'violet' },
+    { name: 'Tailwind CSS', color: 'cyan'   },
+    { name: 'Bootstrap',    color: 'violet' },
   ],
   tools: [
     { name: 'Git',    color: 'rose'  },
@@ -48,11 +51,42 @@ export const skills = {
   ],
   learning: [
     { name: 'TypeScript', color: 'cyan'   },
-    { name: 'C# / .NET',  color: 'violet' },
+    { name: 'Node.js',    color: 'green'  },
+    { name: 'Express.js', color: 'violet' },
   ],
 };
 
 export const projects = [
+  {
+    id: 'jamwave',
+    name: 'JamWave – Music Streaming Web Platform',
+    period: 'August 2026 – Present',
+    role: 'Frontend Developer',
+    type: 'Personal Project',
+    featured: true,
+    description:
+      'A Spotify-inspired music streaming platform built with React and Zustand, featuring 2,400+ tracks, custom audio player engine, playlist management, and an AI music assistant for natural-language search.',
+    shortDesc: 'Spotify-inspired music streaming platform with 2,400+ tracks, Zustand audio player, and AI music assistant.',
+    myContribution: [
+      'Built a Spotify-inspired music streaming platform with 2,400+ tracks from external music APIs',
+      'Developed a custom audio player with React and Zustand, supporting queue, seeking, volume, and continuous playback',
+      'Implemented search, playlists, and liked songs with REST API integration',
+      'Integrated an AI music assistant for natural-language music search and recommendations',
+    ],
+    features: [
+      '2,400+ Music Tracks',
+      'Custom Audio Player Engine',
+      'Zustand Global State Management',
+      'Playback Queue & Seeking & Volume Controls',
+      'Search, Playlists & Liked Songs',
+      'REST API Integration',
+      'AI Music Assistant & Recommendations',
+    ],
+    techStack: ['ReactJS', 'Zustand', 'JavaScript', 'REST APIs', 'Tailwind CSS', 'AI Integration'],
+    github: 'https://github.com/minhthien435/JamWave',
+    hasLiveDemo: false,
+    accentColor: 'violet',
+  },
   {
     id: 'eparking',
     name: 'eParking Management System',
@@ -84,7 +118,7 @@ export const projects = [
     github: 'https://github.com/minhthien435/parking-management-system',
     liveDemo: 'https://eparking-v1.vercel.app/',
     hasLiveDemo: true,
-    accentColor: 'violet',
+    accentColor: 'cyan',
   },
   {
     id: 'todo',
@@ -110,7 +144,7 @@ export const projects = [
     techStack: ['HTML5', 'CSS3', 'JavaScript (ES6+)', 'Local Storage'],
     github: 'https://github.com/minhthien435/TodoApp',
     hasLiveDemo: false,
-    accentColor: 'cyan',
+    accentColor: 'yellow',
   },
 ];
 

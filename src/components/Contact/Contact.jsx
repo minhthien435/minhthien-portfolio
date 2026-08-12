@@ -1,4 +1,4 @@
-import { Mail, Copy, Check } from 'lucide-react';
+import { Mail, Copy, Check, FileText } from 'lucide-react';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import GitHubIcon from '../icons/GitHubIcon';
@@ -11,7 +11,7 @@ const reveal = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
 };
 
-export default function Contact() {
+export default function Contact({ onOpenCv }) {
   const reduced = useReducedMotion();
   const [copied, setCopied] = useState(false);
 
@@ -134,7 +134,7 @@ export default function Contact() {
                 whileTap={{ scale: 0.96 }}
                 onClick={handleSendEmail}
                 className="btn btn-primary"
-                style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
+                style={{ flex: 1, minWidth: 130, justifyContent: 'center' }}
               >
                 <Mail size={16} /> Open Web Gmail
               </motion.button>
@@ -142,9 +142,19 @@ export default function Contact() {
               <motion.button
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.96 }}
-                onClick={handleCopyEmail}
+                onClick={onOpenCv}
                 className="btn btn-outline"
-                style={{ flex: 1, minWidth: 140, justifyContent: 'center' }}
+                style={{ flex: 1, minWidth: 110, justifyContent: 'center' }}
+              >
+                <FileText size={16} /> View CV
+              </motion.button>
+
+              <motion.button
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.96 }}
+                onClick={handleCopyEmail}
+                className="btn btn-ghost"
+                style={{ flex: 1, minWidth: 120, justifyContent: 'center' }}
               >
                 {copied ? <Check size={16} color="var(--green)" /> : <Copy size={16} />}
                 {copied ? 'Copied Email!' : 'Copy Email'}

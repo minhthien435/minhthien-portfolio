@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
-import { Menu, X, ArrowUp, Sun, Moon } from 'lucide-react';
+import { Menu, X, ArrowUp, Sun, Moon, FileText } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 import { useTheme } from '../../hooks/useTheme';
@@ -13,7 +13,7 @@ const navLinks = [
   { label: 'Contact',  href: '#contact'        },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onOpenCv }) {
   const [scrolled, setScrolled]   = useState(false);
   const [menuOpen, setMenuOpen]   = useState(false);
   const [active,   setActive]     = useState('');
@@ -176,6 +176,24 @@ export default function Navbar() {
             </motion.div>
           </motion.button>
 
+          {/* CV Button */}
+          <motion.button
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.96 }}
+            onClick={onOpenCv}
+            className="btn btn-outline"
+            style={{ marginLeft: '0.5rem', padding: '0.45rem 0.95rem', fontSize: '0.85rem', position: 'relative' }}
+          >
+            <FileText size={15} />
+            CV
+            <span style={{
+              width: 7, height: 7, borderRadius: '50%',
+              background: 'var(--violet)',
+              boxShadow: '0 0 8px var(--violet)',
+              display: 'inline-block',
+            }} />
+          </motion.button>
+
           <motion.a
             href={personalInfo.github}
             target="_blank"
@@ -183,7 +201,7 @@ export default function Navbar() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="btn btn-primary"
-            style={{ marginLeft: '0.5rem', padding: '0.5rem 1.1rem', fontSize: '0.875rem' }}
+            style={{ marginLeft: '0.35rem', padding: '0.5rem 1.1rem', fontSize: '0.875rem' }}
           >
             <GitHubIcon size={15} />
             GitHub
@@ -333,6 +351,14 @@ export default function Navbar() {
               >
                 {isDark ? <Sun size={17} /> : <Moon size={17} />}
                 {isDark ? 'Light Mode' : 'Dark Mode'}
+              </button>
+              {/* CV Button */}
+              <button
+                onClick={() => { setMenuOpen(false); onOpenCv(); }}
+                className="btn btn-outline"
+                style={{ justifyContent: 'center' }}
+              >
+                <FileText size={16} /> View CV
               </button>
               {/* GitHub CTA */}
               <a

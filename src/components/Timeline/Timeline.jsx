@@ -63,16 +63,17 @@ const milestones = [
   },
   {
     id: 5,
-    date: 'Present',
-    phase: 'Frontend Developer',
-    title: 'Frontend Developer Journey',
-    icon: '🚀',
+    date: 'August 2026 – Present',
+    phase: 'Featured Project',
+    title: 'JamWave – Music Streaming Web Platform',
+    icon: '🎵',
     accent: 'violet',
-    tags: ['ReactJS', 'Git/GitHub', 'REST APIs', 'Seeking Internship'],
+    tags: ['ReactJS', 'Zustand', 'REST APIs', 'Audio Engine', 'AI Integration'],
     bullets: [
-      'Continuously improving ReactJS, JavaScript, and responsive UI skills',
-      'Learning REST APIs, Git/GitHub, and modern web development practices',
-      'Goal: gain professional experience and contribute to real-world products',
+      'Built a Spotify-inspired music streaming platform with 2,400+ tracks from external music APIs',
+      'Developed a custom audio player with React and Zustand, supporting queue, seeking, volume, and continuous playback',
+      'Implemented search, playlists, and liked songs with REST API integration',
+      'Integrated an AI music assistant for natural-language music search and recommendations',
     ],
     isCurrent: true,
   },
@@ -116,7 +117,7 @@ const colorMap = {
 
 
 /* ─── Phase Badge ────────────────────────────────────────────── */
-const phaseOrder = ['Foundation', 'University', 'First Project', 'Real-world Project', 'Frontend Developer'];
+const phaseOrder = ['Foundation', 'University', 'First Project', 'Real-world Project', 'Featured Project'];
 
 function PhaseBadge({ phase, accent }) {
   const c = colorMap[accent];

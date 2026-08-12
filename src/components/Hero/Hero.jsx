@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown, FileText, Sparkles } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
 import PersonalAvatar from '../Avatar/PersonalAvatar';
@@ -16,7 +16,7 @@ const stagger = {
 
 const ROLES = ['Frontend Developer', 'React Developer', 'UI Enthusiast', 'Web Creator'];
 
-export default function Hero() {
+export default function Hero({ onOpenCv }) {
   const reduced = useReducedMotion();
   const [roleIndex, setRoleIndex] = useState(0);
   const [displayed, setDisplayed] = useState('');
@@ -315,7 +315,7 @@ export default function Hero() {
               variants={stagger.item}
               style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}
             >
-              {['ReactJS', 'JavaScript', 'HTML/CSS'].map((s) => (
+              {['ReactJS', 'JavaScript', 'Tailwind CSS', 'HTML/CSS'].map((s) => (
                 <span key={s} className="tag tag-violet" style={{ fontSize: '0.8rem' }}>{s}</span>
               ))}
               <span style={{ color: 'var(--text-3)', fontSize: '0.8rem' }}>+more</span>
@@ -325,16 +325,78 @@ export default function Hero() {
             <motion.div
               className="hero-cta-row"
               variants={stagger.item}
-              style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap', alignItems: 'center' }}
+              style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center', marginTop: '0.75rem' }}
             >
+              {/* Highlighted Primary CV Button with Floating Pointer Badge */}
+              <div style={{ position: 'relative', display: 'inline-block' }}>
+                {/* Floating Pointer Tag & Arrow */}
+                <motion.div
+                  initial={{ y: -6, opacity: 0 }}
+                  animate={{ y: [0, -6, 0], opacity: 1 }}
+                  transition={{
+                    y: { repeat: Infinity, duration: 2.2, ease: 'easeInOut' },
+                    opacity: { duration: 0.5, delay: 0.8 }
+                  }}
+                  style={{
+                    position: 'absolute',
+                    top: '-2.4rem',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    whiteSpace: 'nowrap',
+                    zIndex: 10,
+                    pointerEvents: 'none',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                >
+                  <span style={{
+                    background: 'linear-gradient(135deg, var(--violet) 0%, #06B6D4 100%)',
+                    color: '#FFFFFF',
+                    fontSize: '0.72rem',
+                    fontWeight: 700,
+                    padding: '0.2rem 0.65rem',
+                    borderRadius: 'var(--r-full)',
+                    boxShadow: '0 4px 14px rgba(124,58,237,0.4)',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    letterSpacing: '0.01em',
+                  }}>
+                   Check out my CV!
+                  </span>
+                  <svg width="12" height="7" viewBox="0 0 12 7" fill="none" style={{ marginTop: '-1px' }}>
+                    <path d="M6 7L0 0H12L6 7Z" fill="#06B6D4" />
+                  </svg>
+                </motion.div>
+
+                {/* CV Button */}
+                <motion.button
+                  whileHover={{ scale: 1.06, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={onOpenCv}
+                  className="btn btn-primary"
+                  style={{
+                    position: 'relative',
+                    background: 'linear-gradient(135deg, var(--violet) 0%, #6D28D9 100%)',
+                    boxShadow: '0 0 24px rgba(124, 58, 237, 0.45)',
+                    padding: '0.75rem 1.6rem',
+                  }}
+                >
+                  <FileText size={17} /> View CV
+                  <span className="cv-pulse-ring" />
+                </motion.button>
+              </div>
+
               <motion.button
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
                 onClick={() => scrollTo('#projects')}
-                className="btn btn-primary"
+                className="btn btn-outline"
               >
                 View Projects <ArrowRight size={16} />
               </motion.button>
+
               <motion.a
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.96 }}
@@ -397,6 +459,21 @@ export default function Hero() {
       </motion.button>
 
       <style>{`
+        @keyframes cv-pulse {
+          0% { transform: scale(1); opacity: 0.8; }
+          70% { transform: scale(1.16); opacity: 0; }
+          100% { transform: scale(1.16); opacity: 0; }
+        }
+
+        .cv-pulse-ring {
+          position: absolute;
+          inset: -3px;
+          border-radius: 99px;
+          border: 2px solid var(--violet);
+          animation: cv-pulse 2.2s infinite ease-out;
+          pointer-events: none;
+        }
+
         @media (max-width: 960px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
@@ -423,6 +500,12 @@ export default function Hero() {
 
         @media (max-width: 380px) {
           .mascot-col { display: none !important; }
+        }
+
+        @media (max-width: 480px) {
+          .hero-cta-row {
+            margin-top: 1.75rem !important;
+          }
         }
 
         @media (max-height: 640px) {
