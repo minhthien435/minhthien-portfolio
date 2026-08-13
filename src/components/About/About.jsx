@@ -74,16 +74,16 @@ export default function About() {
               }}>
                 ML
               </div>
-              <div>
+              <div style={{ minWidth: 0 }}>
                 <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '1.125rem', color: 'var(--text)' }}>
                   {personalInfo.name}
                 </h3>
-                <p style={{ color: 'var(--violet)', fontWeight: 600, fontSize: '0.875rem' }}>
+                <p style={{ color: 'var(--violet)', fontWeight: 600, fontSize: '0.8125rem', wordBreak: 'break-word' }}>
                   {personalInfo.careerDirection} · Student
                 </p>
               </div>
             </div>
-            <p style={{ color: 'var(--text-2)', lineHeight: 1.8, fontSize: '1rem' }}>
+            <p className="bento-bio-text" style={{ color: 'var(--text-2)', lineHeight: 1.7 }}>
               {aboutText}
             </p>
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
@@ -103,7 +103,6 @@ export default function About() {
               flexDirection: 'column',
               justifyContent: 'space-between',
               color: 'white',
-              minHeight: 200,
               position: 'relative',
               overflow: 'hidden',
               boxShadow: 'var(--shadow-md)',
@@ -184,7 +183,6 @@ export default function About() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              minHeight: 160,
             }}
           >
             <Target size={24} color="var(--yellow-text)" />
@@ -209,7 +207,6 @@ export default function About() {
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              minHeight: 160,
             }}
           >
             <Globe size={24} color="var(--cyan-text)" />
@@ -232,7 +229,7 @@ export default function About() {
               padding: '1.75rem',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem' }}>
+            <div className="bento-looking-for-row">
               <div style={{
                 width: 42, height: 42, borderRadius: 12,
                 background: 'var(--green-light)', border: '1.5px solid #A7F3D0',
@@ -241,17 +238,17 @@ export default function About() {
               }}>
                 <Sparkles size={20} color="#065F46" />
               </div>
-              <div>
-                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)', marginBottom: '0.5rem' }}>
+              <div style={{ width: '100%', minWidth: 0, overflow: 'hidden' }}>
+                <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)', marginBottom: '0.5rem', wordBreak: 'break-word' }}>
                   Currently Looking For
                 </p>
-                <p style={{ color: 'var(--text-2)', fontSize: '0.875rem', lineHeight: 1.7 }}>
+                <p style={{ color: 'var(--text-2)', fontSize: '0.875rem', lineHeight: 1.7, wordBreak: 'break-word' }}>
                   A <strong>Frontend Developer Internship</strong> where I can contribute, learn from senior developers, and work on real-world products.
                 </p>
-                <ul style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+                <ul style={{ marginTop: '0.75rem', display: 'flex', flexWrap: 'wrap', gap: '0.4rem', width: '100%' }}>
                   {careerObjective.reasons.map(r => (
-                    <li key={r} style={{ listStyle: 'none' }}>
-                      <span className="tag tag-green" style={{ fontSize: '0.75rem' }}>✓ {r}</span>
+                    <li key={r} style={{ listStyle: 'none', maxWidth: '100%' }}>
+                      <span className="tag tag-green" style={{ fontSize: '0.75rem', whiteSpace: 'normal', wordBreak: 'break-word', display: 'inline-block' }}>✓ {r}</span>
                     </li>
                   ))}
                 </ul>
@@ -265,22 +262,54 @@ export default function About() {
         .bento-grid-container {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1rem;
+          gap: 1.25rem;
+        }
+        .bento-grid-container > div {
+          min-width: 0;
+          max-width: 100%;
+          width: 100%;
+          transition: all 0.25s ease;
         }
         .bento-span-2 {
           grid-column: span 2;
         }
+        .bento-looking-for-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 1rem;
+        }
+        .bento-bio-text {
+          font-size: clamp(0.875rem, 2.5vw, 1rem);
+        }
         @media (max-width: 900px) {
           .bento-grid-container {
             grid-template-columns: repeat(2, 1fr) !important;
+            gap: 1rem;
           }
         }
         @media (max-width: 640px) {
           .bento-grid-container {
             grid-template-columns: 1fr !important;
+            gap: 0.875rem;
           }
           .bento-span-2 {
             grid-column: span 1 !important;
+          }
+          .bento-grid-container > div {
+            min-height: auto !important;
+          }
+        }
+        @media (max-width: 520px) {
+          .bento-looking-for-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 0.75rem !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .bento-span-2,
+          .bento-grid-container > div {
+            padding: 1.15rem !important;
           }
         }
       `}</style>

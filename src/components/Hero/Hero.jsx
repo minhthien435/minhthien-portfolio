@@ -328,7 +328,7 @@ export default function Hero({ onOpenCv }) {
               style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', alignItems: 'center', marginTop: '0.75rem' }}
             >
               {/* Highlighted Primary CV Button with Floating Pointer Badge */}
-              <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div className="hero-cv-btn-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
                 {/* Floating Pointer Tag & Arrow */}
                 <motion.div
                   initial={{ y: -6, opacity: 0 }}
@@ -381,6 +381,8 @@ export default function Hero({ onOpenCv }) {
                     background: 'linear-gradient(135deg, var(--violet) 0%, #6D28D9 100%)',
                     boxShadow: '0 0 24px rgba(124, 58, 237, 0.45)',
                     padding: '0.75rem 1.6rem',
+                    overflow: 'hidden',
+                    zIndex: 2,
                   }}
                 >
                   <FileText size={17} /> View CV
@@ -467,7 +469,7 @@ export default function Hero({ onOpenCv }) {
 
         .cv-pulse-ring {
           position: absolute;
-          inset: -3px;
+          inset: 0;
           border-radius: 99px;
           border: 2px solid var(--violet);
           animation: cv-pulse 2.2s infinite ease-out;
@@ -495,7 +497,14 @@ export default function Hero({ onOpenCv }) {
         @media (max-width: 560px) {
           .mascot-col svg { max-width: 160px; }
           .hero-grid { gap: 1rem !important; }
-          .hero-cta-row .btn { flex: 1; justify-content: center; min-width: 0; }
+          .hero-cta-row { gap: 0.625rem !important; }
+          .hero-cta-row .btn { flex: 0 1 auto; justify-content: center; min-width: 140px; }
+        }
+
+        /* Make the CTAs stack cleanly on very narrow phones */
+        @media (max-width: 360px) {
+          .hero-cta-row { gap: 0.5rem !important; }
+          .hero-cta-row .btn { min-width: 120px; }
         }
 
         @media (max-width: 380px) {

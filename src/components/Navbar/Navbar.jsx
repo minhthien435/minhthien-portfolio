@@ -62,6 +62,7 @@ export default function Navbar({ onOpenCv }) {
         position: 'fixed',
         top: 0, left: 0, right: 0,
         zIndex: 100,
+        paddingTop: 'env(safe-area-inset-top)',
         transition: 'background 0.3s, box-shadow 0.3s',
         background: scrolled ? 'var(--bg)' : 'transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
@@ -248,7 +249,7 @@ export default function Navbar({ onOpenCv }) {
             {/* Menu header */}
             <div style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '1.25rem 1.5rem',
+              padding: 'calc(1.25rem + env(safe-area-inset-top, 0px)) 1.5rem 1.25rem',
               borderBottom: '1px solid var(--border)',
             }}>
               {/* Logo in menu */}
