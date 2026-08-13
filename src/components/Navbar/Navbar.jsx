@@ -63,10 +63,9 @@ export default function Navbar({ onOpenCv }) {
         top: 0, left: 0, right: 0,
         zIndex: 100,
         transition: 'background 0.3s, box-shadow 0.3s',
-        background: scrolled ? 'rgba(var(--bg-rgb, 250,250,248), 0.92)' : 'transparent',
+        background: scrolled ? 'var(--bg)' : 'transparent',
         backdropFilter: scrolled ? 'blur(16px)' : 'none',
         boxShadow: scrolled ? '0 1px 0 var(--border)' : 'none',
-        backgroundColor: scrolled ? 'var(--bg)' : 'transparent',
       }}
     >
       {/* Scroll progress bar */}

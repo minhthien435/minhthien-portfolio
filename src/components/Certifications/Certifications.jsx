@@ -11,8 +11,8 @@ const reveal = {
 const certColors = ['violet', 'cyan', 'yellow'];
 const certBg = {
   violet: { bg: 'var(--violet-light)', border: 'var(--violet-mid)', text: 'var(--violet)', accentBg: 'var(--violet)' },
-  cyan:   { bg: 'var(--cyan-light)',   border: '#A5F3FC',           text: '#0E7490',       accentBg: '#06B6D4' },
-  yellow: { bg: 'var(--yellow-light)', border: '#FDE68A',           text: '#92400E',       accentBg: '#F59E0B' },
+  cyan:   { bg: 'var(--cyan-light)',   border: 'var(--cyan-border)', text: 'var(--cyan-text)', accentBg: 'var(--cyan)' },
+  yellow: { bg: 'var(--yellow-light)', border: 'var(--yellow-border)', text: 'var(--yellow-text)', accentBg: 'var(--yellow)' },
 };
 
 export default function Certifications() {
@@ -90,9 +90,9 @@ export default function Certifications() {
                     padding: '0.2rem 0.55rem',
                     borderRadius: 'var(--r-full)',
                     background: 'var(--green-light)',
-                    border: '1.5px solid #A7F3D0',
+                    border: '1.5px solid var(--green-border)',
                     fontSize: '0.7rem', fontWeight: 700,
-                    color: '#065F46',
+                    color: 'var(--green-text)',
                   }}>
                     ✓ Done
                   </span>

@@ -143,6 +143,53 @@ body {
   overflow-x: hidden;
 }
 
+/* ============================================================
+   MOBILE QUALITY (tap targets, tap highlight, dynamic viewport,
+   safe areas, balance text)
+   ============================================================ */
+* { -webkit-tap-highlight-color: transparent; }
+
+html {
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+body {
+  min-height: 100%;
+  min-height: 100dvh;
+  text-wrap: pretty;
+  text-rendering: optimizeLegibility;
+  -webkit-overflow-scrolling: touch;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+  overflow-wrap: break-word;
+}
+
+p {
+  overflow-wrap: break-word;
+}
+
+a, button, [role="button"], input, select, textarea, label, summary {
+  touch-action: manipulation;
+}
+
+img, video, svg {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (orientation: landscape) and (max-height: 480px) {
+  .display { font-size: clamp(2rem, 8vw, 3rem); }
+}
+
+body:not(.has-custom-cursor) {
+  cursor: auto;
+}
+
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+
 /* Native cursor is hidden ONLY when the custom cursor is mounted */
 body.has-custom-cursor {
   cursor: none;
@@ -271,19 +318,19 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 1.125rem;
   }
   .section-gap {
-    padding: 3.5rem 0;
+    padding-block: 3.5rem;
   }
   .section-gap-sm {
-    padding: 2.5rem 0;
+    padding-block: 2.5rem;
   }
 }
 
 .section-gap {
-  padding: 6rem 0;
+  padding-block: 6rem;
 }
 
 .section-gap-sm {
-  padding: 4rem 0;
+  padding-block: 4rem;
 }
 
 /* Bento Grid */

@@ -508,6 +508,10 @@ export default function Hero({ onOpenCv }) {
           }
         }
 
+        @supports (min-height: 100dvh) {
+          #hero { min-height: 100dvh !important; }
+        }
+
         @media (max-height: 640px) {
           .hero-scroll-indicator { display: none; }
         }

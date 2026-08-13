@@ -75,6 +75,7 @@ function FeaturedProject({ project, onOpenModal }) {
 
         {/* Video Player Container */}
         <div
+          className="featured-video-wrap"
           style={{
             height: 320,
             position: 'relative',
@@ -492,6 +493,13 @@ export default function Projects() {
       <AnimatePresence>
         {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
       </AnimatePresence>
+
+      <style>{`
+        .featured-video-wrap { height: 320px; }
+        @media (max-width: 600px) {
+          .featured-video-wrap { height: 220px !important; }
+        }
+      `}</style>
     </section>
   );
 }
