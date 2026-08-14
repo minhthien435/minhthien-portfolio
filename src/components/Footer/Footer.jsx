@@ -1,73 +1,49 @@
-import GitHubIcon from '../icons/GitHubIcon';
 import { motion } from 'framer-motion';
+import { Sparkles, ArrowUp, Code } from 'lucide-react';
+import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
-import Mascot from '../../mascot/Mascot';
+import BrandLogo from '../Common/BrandLogo';
 
 export default function Footer() {
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
-    <footer style={{ background: 'var(--bg)', borderTop: '1.5px solid var(--border)', padding: '1.75rem 0' }}>
-      <div className="container footer-inner">
-        {/* Left */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-          <Mascot size={34} compact />
-          <p style={{ color: 'var(--text-3)', fontSize: '0.8125rem' }}>
-            © {new Date().getFullYear()}{' '}
-            <span style={{ color: 'var(--text-2)', fontWeight: 600 }}>Minh Le</span>
-            {' '}· All rights reserved.
-          </p>
+    <footer className="bg-stone-950 border-t border-stone-900 py-12 px-4 md:px-8 text-stone-400">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Left Brand */}
+        <div className="flex items-center gap-3">
+          <BrandLogo className="w-9 h-9" showText={true} />
         </div>
 
-        {/* Right */}
-        <div className="footer-right" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <p className="footer-built-with" style={{ color: 'var(--text-3)', fontSize: '0.8125rem' }}>
-            Built with React + Vite
-          </p>
-          <motion.a
+        {/* Center Tech Stack */}
+        <div className="flex items-center gap-2 text-xs font-mono text-stone-500">
+          <Code className="w-3.5 h-3.5 text-cyan-400" />
+          <span>React 19 + GSAP + Tailwind CSS + Lenis</span>
+        </div>
+
+        {/* Right GitHub & Back to top */}
+        <div className="flex items-center gap-4">
+          <a
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.1, y: -1 }}
-            style={{
-              display: 'flex', alignItems: 'center', gap: '0.35rem',
-              color: 'var(--text-2)', fontSize: '0.8125rem',
-              textDecoration: 'none',
-              padding: '0.35rem 0.75rem',
-              borderRadius: 'var(--r-full)',
-              border: '1.5px solid var(--border)',
-              background: 'var(--bg-white)',
-              transition: 'color 0.2s, border-color 0.2s',
-              whiteSpace: 'nowrap',
-            }}
-            onMouseEnter={e => { e.currentTarget.style.color = 'var(--violet)'; e.currentTarget.style.borderColor = 'var(--violet-mid)'; }}
-            onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-2)'; e.currentTarget.style.borderColor = 'var(--border)'; }}
+            className="flex items-center gap-1.5 text-xs text-stone-400 hover:text-white transition-colors"
           >
-            <GitHubIcon size={14} /> @minhthien435
-          </motion.a>
+            <GitHubIcon className="w-4 h-4" />
+            <span>@{personalInfo.githubHandle}</span>
+          </a>
+
+          <button
+            onClick={scrollToTop}
+            className="p-2 rounded-full bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-cyan-400 transition-colors border border-stone-800"
+            aria-label="Back to top"
+          >
+            <ArrowUp className="w-4 h-4" />
+          </button>
         </div>
       </div>
-
-      <style>{`
-        .footer-inner {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 0.75rem;
-        }
-        @media (max-width: 520px) {
-          .footer-inner {
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-          }
-          .footer-right {
-            justify-content: center;
-          }
-          .footer-built-with {
-            display: none;
-          }
-        }
-      `}</style>
     </footer>
   );
 }

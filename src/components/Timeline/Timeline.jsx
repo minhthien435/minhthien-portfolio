@@ -1,607 +1,203 @@
-import { useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
-
+import { motion } from 'framer-motion';
+import { Milestone, CheckCircle2 } from 'lucide-react';
 import ieltsLogo from '../../assets/ielts-logo.png';
 import fptLogo from '../../assets/fpt-logo.png';
 import todoIcon from '../../assets/todo-icon.png';
 import eparkingLogo from '../../assets/eparking-logo.png';
 import jamwaveLogo from '../../assets/jamwave-logo.jpg';
 
-/* ─── Timeline Data ─────────────────────────────────────────── */
 const milestones = [
   {
     id: 1,
     date: 'December 2023',
-    phase: 'Foundation',
+    phase: 'Global Foundation',
     title: 'IELTS 6.0 Achieved',
-    icon: '🌐',
     image: ieltsLogo,
-    imageFit: 'contain',
-    imagePadding: '6px',
-    accent: 'cyan',
-    tags: ['English', 'Communication'],
+    gradient: 'from-amber-400 via-orange-500 to-rose-500',
+    borderColor: 'border-amber-500/40 hover:border-amber-400',
+    phaseColor: 'text-amber-400',
+    nodeGlow: 'bg-gradient-to-r from-amber-400 to-rose-500 shadow-[0_0_20px_rgba(251,191,36,0.5)]',
+    tags: ['English Proficiency', 'Communication', 'Global Mindset'],
     bullets: [
-      'Achieved an IELTS overall score of 6.0',
-      'First major milestone in developing English communication skills',
-      'Prepared myself for university and the technology field',
+      'Achieved an IELTS overall score of 6.0, establishing strong English communication skills',
+      'Read and write technical engineering documentation with confidence',
+      'Prepared academic baseline for software engineering at university',
     ],
   },
   {
     id: 2,
-    date: 'September 2024',
-    phase: 'University',
-    title: 'Started at FPT University',
-    icon: '🎓',
+    date: 'September 2024 – Present',
+    phase: 'Academic Journey',
+    title: 'FPT University — Software Engineering',
     image: fptLogo,
-    imageFit: 'contain',
-    imagePadding: '4px',
-    accent: 'violet',
-    tags: ['FPT University', 'Software Engineering', 'IT'],
+    gradient: 'from-violet-500 via-purple-500 to-indigo-600',
+    borderColor: 'border-violet-500/40 hover:border-violet-400',
+    phaseColor: 'text-violet-400',
+    nodeGlow: 'bg-gradient-to-r from-violet-500 to-indigo-500 shadow-[0_0_20px_rgba(139,92,246,0.5)]',
+    tags: ['Software Engineering', 'Algorithms', 'Databases', 'Web Architecture'],
     bullets: [
-      'Enrolled in Information Technology at FPT University',
-      'Built foundation in programming, databases, and software engineering',
-      'Studied web development fundamentals and problem-solving techniques',
+      'Enrolled in Bachelor of Information Technology at FPT University',
+      'Mastered core computer science foundations, algorithms, and software design patterns',
+      'Formed deep specialization in modern Frontend Engineering and React ecosystem',
     ],
   },
   {
     id: 3,
-    date: 'Apr – Jun 2026',
-    phase: 'First Project',
-    title: 'Todo App — First Frontend Project',
-    icon: '⚛️',
+    date: 'May 2026',
+    phase: 'First Frontend App',
+    title: 'Todo App with CRUD & Local Storage',
     image: todoIcon,
-    imageFit: 'contain',
-    imagePadding: '2px',
-    accent: 'yellow',
-    tags: ['HTML5', 'CSS3', 'JavaScript', 'ES6+', 'LocalStorage'],
+    gradient: 'from-cyan-400 via-sky-500 to-blue-600',
+    borderColor: 'border-cyan-500/40 hover:border-cyan-400',
+    phaseColor: 'text-cyan-400',
+    nodeGlow: 'bg-gradient-to-r from-cyan-400 to-blue-500 shadow-[0_0_20px_rgba(6,182,212,0.5)]',
+    tags: ['HTML5', 'CSS3', 'JavaScript ES6+', 'Local Storage'],
     bullets: [
-      'Built my first focused frontend project: a full-featured Todo application',
-      'Implemented CRUD operations, task filtering, and Local Storage persistence',
-      'Strengthened understanding of frontend fundamentals and how web apps work',
+      'Built a full-featured task management web application from scratch',
+      'Implemented reactive filtering, state persistence with Local Storage, and clean DOM manipulation',
+      'Laid robust JavaScript programming foundations',
     ],
   },
   {
     id: 4,
-    date: 'Jun – Jul 2026',
-    phase: 'Real-world Project',
+    date: 'June 2026 – July 2026',
+    phase: 'Team Collaboration',
     title: 'eParking Management System',
-    icon: '🚗',
     image: eparkingLogo,
-    imageFit: 'contain',
-    imagePadding: '4px',
-    accent: 'green',
-    tags: ['ReactJS', 'JavaScript', 'Responsive UI', 'Full Stack'],
+    gradient: 'from-fuchsia-500 via-pink-500 to-rose-600',
+    borderColor: 'border-fuchsia-500/40 hover:border-fuchsia-400',
+    phaseColor: 'text-fuchsia-400',
+    nodeGlow: 'bg-gradient-to-r from-fuchsia-500 to-rose-500 shadow-[0_0_20px_rgba(236,72,153,0.5)]',
+    tags: ['ReactJS', 'Tailwind CSS', 'Axios', 'REST API', 'ANPR'],
     bullets: [
-      'Developed a practical parking management system from scratch',
-      'Built parking slot management, booking flow, and payment integration',
-      'Created responsive user interfaces — a major step from fundamentals to real apps',
+      'Engineered responsive customer and admin UI for smart automated parking with ANPR',
+      'Integrated RESTful backend APIs with Axios and managed complex booking workflows',
+      'Collaborated effectively in a team environment using Git & GitHub workflows',
     ],
   },
   {
     id: 5,
     date: 'August 2026 – Present',
-    phase: 'Featured Project',
-    title: 'JamWave – Music Streaming Web Platform',
-    icon: '🎵',
+    phase: 'Advanced Engineering',
+    title: 'JamWave – Music Streaming Platform',
     image: jamwaveLogo,
-    imageFit: 'cover',
-    imagePadding: '0px',
-    accent: 'violet',
-    tags: ['ReactJS', 'Zustand', 'REST APIs', 'Audio Engine', 'AI Integration'],
+    gradient: 'from-emerald-400 via-teal-500 to-cyan-600',
+    borderColor: 'border-emerald-500/40 hover:border-emerald-400',
+    phaseColor: 'text-emerald-400',
+    nodeGlow: 'bg-gradient-to-r from-emerald-400 to-teal-500 shadow-[0_0_20px_rgba(16,185,129,0.5)]',
+    tags: ['ReactJS', 'Zustand', 'Web Audio API', 'AI Integration'],
     bullets: [
-      'Built a Spotify-inspired music streaming platform with 2,400+ tracks from external music APIs',
-      'Developed a custom audio player with React and Zustand, supporting queue, seeking, volume, and continuous playback',
-      'Implemented search, playlists, and liked songs with REST API integration',
-      'Integrated an AI music assistant for natural-language music search and recommendations',
+      'Developed Spotify-inspired music streaming application with 2,400+ tracks',
+      'Architected custom audio player engine with Zustand global state management',
+      'Integrated natural language AI music assistant for smart recommendations',
     ],
-    isCurrent: true,
   },
 ];
 
-/* ─── Color Map ──────────────────────────────────────────────── */
-const colorMap = {
-  violet: {
-    dot:    'var(--violet)',
-    bg:     'var(--violet-light)',
-    border: 'var(--violet-mid)',
-    text:   'var(--violet)',
-    tag:    'tag-violet',
-    glow:   'rgba(139,92,246,0.22)',
-  },
-  cyan: {
-    dot:    'var(--cyan)',
-    bg:     'var(--cyan-light)',
-    border: 'var(--cyan-border)',
-    text:   'var(--cyan-text)',
-    tag:    'tag-cyan',
-    glow:   'rgba(56,189,248,0.22)',
-  },
-  yellow: {
-    dot:    'var(--yellow)',
-    bg:     'var(--yellow-light)',
-    border: 'var(--yellow-border)',
-    text:   'var(--yellow-text)',
-    tag:    'tag-yellow',
-    glow:   'rgba(251,191,36,0.22)',
-  },
-  green: {
-    dot:    'var(--green)',
-    bg:     'var(--green-light)',
-    border: 'var(--green-border)',
-    text:   'var(--green-text)',
-    tag:    'tag-green',
-    glow:   'rgba(52,211,153,0.22)',
-  },
-};
-
-
-/* ─── Phase Badge ────────────────────────────────────────────── */
-const phaseOrder = ['Foundation', 'University', 'First Project', 'Real-world Project', 'Featured Project'];
-
-function PhaseBadge({ phase, accent }) {
-  const c = colorMap[accent];
-  return (
-    <span style={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '0.3rem',
-      padding: '0.2rem 0.65rem',
-      borderRadius: 'var(--r-full)',
-      background: c.bg,
-      border: `1.5px solid ${c.border}`,
-      color: c.text,
-      fontSize: '0.7rem',
-      fontWeight: 700,
-      letterSpacing: '0.06em',
-      textTransform: 'uppercase',
-    }}>
-      <span style={{
-        width: 5, height: 5, borderRadius: '50%',
-        background: c.dot, display: 'inline-block',
-      }} />
-      {phase}
-    </span>
-  );
-}
-
-/* ─── Timeline Card ──────────────────────────────────────────── */
-function TimelineCard({ item, isLeft, index }) {
-  const reduced = useReducedMotion();
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-60px' });
-  const c = colorMap[item.accent];
-
-  const variants = {
-    hidden: { opacity: 0, x: isLeft ? -40 : 40 },
-    visible: {
-      opacity: 1, x: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.05 },
-    },
-  };
-
-  return (
-    <motion.div
-      ref={ref}
-      variants={reduced ? {} : variants}
-      initial={reduced ? false : 'hidden'}
-      animate={inView ? 'visible' : 'hidden'}
-      className={`tl-card-wrapper ${isLeft ? 'tl-left' : 'tl-right'}`}
-    >
-      <motion.div
-        whileHover={{ y: -5, boxShadow: `0 16px 48px ${c.glow}, var(--shadow-md)` }}
-        transition={{ duration: 0.25 }}
-        className="tl-card"
-        style={{
-          background: 'var(--bg-white)',
-          border: `1.5px solid ${c.border}`,
-          borderRadius: 'var(--r-xl)',
-          padding: '1.75rem',
-          boxShadow: 'var(--shadow-sm)',
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Accent glow strip top-left */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0,
-          width: 4, height: '100%',
-          background: `linear-gradient(to bottom, ${c.dot}, transparent)`,
-          borderRadius: '4px 0 0 4px',
-        }} />
-
-        {/* Current pulse ring */}
-        {item.isCurrent && (
-          <div style={{
-            position: 'absolute', top: '1.25rem', right: '1.25rem',
-            display: 'flex', alignItems: 'center', gap: '0.375rem',
-          }}>
-            <span style={{
-              width: 8, height: 8, borderRadius: '50%',
-              background: 'var(--green)', display: 'inline-block',
-              boxShadow: '0 0 0 0 var(--green)',
-              animation: 'pulse-ring 2s ease-out infinite',
-            }} />
-            <span style={{ fontSize: '0.7rem', fontWeight: 700, color: '#065F46' }}>Now</span>
-          </div>
-        )}
-
-        {/* Header row */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '1rem', marginBottom: '1rem' }}>
-          {/* Icon Image */}
-          <div style={{
-            width: 52, height: 52, borderRadius: 14,
-            background: 'var(--bg-white)',
-            border: `1.5px solid ${c.border}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0, overflow: 'hidden',
-            boxShadow: 'var(--shadow-sm)',
-            padding: item.imagePadding || '4px',
-          }}>
-            {item.image ? (
-              <img
-                src={item.image}
-                alt={item.title}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: item.imageFit || 'contain',
-                  borderRadius: item.imageRadius || 8,
-                }}
-              />
-            ) : (
-              <span style={{ fontSize: '1.5rem' }}>{item.icon}</span>
-            )}
-          </div>
-
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {/* Phase badge */}
-            <div style={{ marginBottom: '0.4rem' }}>
-              <PhaseBadge phase={item.phase} accent={item.accent} />
-            </div>
-            {/* Date */}
-            <p style={{
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 700, fontSize: '0.8125rem',
-              color: c.text, letterSpacing: '-0.01em',
-            }}>
-              {item.date}
-            </p>
-          </div>
-        </div>
-
-        {/* Title */}
-        <h3 style={{
-          fontFamily: "'Space Grotesk', sans-serif",
-          fontWeight: 700, fontSize: '1.0625rem',
-          color: 'var(--text)', lineHeight: 1.3,
-          marginBottom: '0.875rem',
-        }}>
-          {item.title}
-        </h3>
-
-        {/* Bullet points */}
-        <ul style={{
-          display: 'flex', flexDirection: 'column', gap: '0.5rem',
-          marginBottom: '1.125rem', paddingLeft: 0,
-        }}>
-          {item.bullets.map((b, i) => (
-            <li key={i} style={{
-              display: 'flex', gap: '0.625rem', alignItems: 'flex-start',
-              listStyle: 'none',
-            }}>
-              <span style={{
-                width: 5, height: 5, borderRadius: '50%',
-                background: c.dot, marginTop: '0.45rem', flexShrink: 0,
-              }} />
-              <span style={{
-                color: 'var(--text-2)', fontSize: '0.875rem',
-                lineHeight: 1.65,
-              }}>
-                {b}
-              </span>
-            </li>
-          ))}
-        </ul>
-
-        {/* Tags */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.375rem' }}>
-          {item.tags.map(t => (
-            <span key={t} className={`tag ${c.tag}`} style={{ fontSize: '0.72rem' }}>
-              {t}
-            </span>
-          ))}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-/* ─── Progress Steps Header ──────────────────────────────────── */
-function ProgressSteps() {
-  return (
-    <div className="tl-progress-steps">
-      {phaseOrder.map((phase, i) => (
-        <div key={phase} className="tl-step" style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
-          <div style={{
-            width: 28, height: 28, borderRadius: '50%',
-            background: i === phaseOrder.length - 1 ? 'var(--violet)' : 'var(--bg-white)',
-            border: `2px solid ${i === phaseOrder.length - 1 ? 'var(--violet)' : 'var(--border-md)'}`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '0.7rem', fontWeight: 700,
-            color: i === phaseOrder.length - 1 ? 'white' : 'var(--text-3)',
-          }}>
-            {i + 1}
-          </div>
-          <span style={{
-            fontSize: '0.72rem', fontWeight: 600,
-            color: i === phaseOrder.length - 1 ? 'var(--violet)' : 'var(--text-3)',
-            whiteSpace: 'nowrap',
-          }}>
-            {phase}
-          </span>
-          {i < phaseOrder.length - 1 && (
-            <div style={{
-              flex: 1, height: 1,
-              background: 'linear-gradient(to right, var(--border-md), transparent)',
-              minWidth: 16,
-            }} />
-          )}
-        </div>
-      ))}
-    </div>
-  );
-}
-
-/* ─── Main Component ─────────────────────────────────────────── */
 export default function Timeline() {
-  const reduced = useReducedMotion();
-
-  const headerRef = useRef(null);
-  const headerInView = useInView(headerRef, { once: true });
-
   return (
-    <section id="timeline" aria-label="My Journey" style={{ background: 'var(--bg)' }}>
-      <div className="divider" />
-      <div className="container section-gap">
+    <section id="timeline" className="py-28 px-4 md:px-8 bg-stone-950 text-white relative overflow-hidden">
+      {/* Background radial glow */}
+      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-violet-600/15 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
 
-        {/* ── Section Header ── */}
-        <motion.div
-          ref={headerRef}
-          initial={reduced ? false : { opacity: 0, y: 24 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          style={{ marginBottom: '2.5rem' }}
-        >
-          <p className="section-eyebrow">Career Story</p>
-          <h2 className="headline" style={{ marginTop: '0.5rem' }}>My Journey</h2>
-          <p style={{
-            color: 'var(--text-2)', marginTop: '0.75rem',
-            maxWidth: 520, fontSize: '1rem', lineHeight: 1.7,
-          }}>
+      <div className="max-w-6xl mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="flex flex-col items-center text-center mb-20">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-violet-500/20 via-cyan-500/20 to-rose-500/20 border border-violet-500/40 text-violet-300 text-xs font-mono mb-3 shadow-md">
+            <Milestone className="w-3.5 h-3.5 text-cyan-400" />
+            <span>CAREER STORY</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-3">
+            My{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-cyan-400 to-rose-400">
+              Journey
+            </span>
+          </h2>
+          <p className="text-stone-400 text-sm md:text-base max-w-2xl leading-relaxed font-light">
             From my first English milestone to building real-world web applications — a story of continuous learning and growth.
           </p>
-        </motion.div>
+        </div>
 
-        {/* ── Progress Steps ── */}
-        <motion.div
-          initial={reduced ? false : { opacity: 0, y: 16 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.15 }}
-          style={{ marginBottom: '3.5rem' }}
-        >
-          <ProgressSteps />
-        </motion.div>
+        {/* Alternating Zig-Zag Timeline */}
+        <div className="relative">
+          {/* Central Vertical Spine Line with multi-color neon gradient */}
+          <div className="absolute top-0 bottom-0 left-4 md:left-1/2 -translate-x-1/2 w-[3px] bg-gradient-to-b from-amber-400 via-violet-500 via-cyan-400 via-fuchsia-500 to-emerald-400 shadow-[0_0_15px_rgba(6,182,212,0.4)] opacity-70" />
 
-        {/* ── Timeline Body ── */}
-        <div className="tl-body">
-          {/* Vertical center line */}
-          <div className="tl-line" aria-hidden="true">
-            <div className="tl-line-fill" />
+          <div className="space-y-12 md:space-y-16">
+            {milestones.map((item, index) => {
+              const isEven = index % 2 === 0;
+
+              return (
+                <div key={item.id} className="relative flex items-center">
+                  {/* Glowing Node at center with custom color */}
+                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-stone-950 border-2 border-white/20 flex items-center justify-center z-20 shadow-xl transition-all duration-300">
+                    <div className={`w-3.5 h-3.5 rounded-full ${item.nodeGlow} animate-pulse`} />
+                  </div>
+
+                  {/* Milestone Card with colorful border and accent glow */}
+                  <motion.div
+                    initial={{ opacity: 0, x: isEven ? -40 : 40 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.08 }}
+                    className={`w-full md:w-[calc(50%-2.5rem)] pl-12 md:pl-0 ${
+                      isEven ? 'md:mr-auto' : 'md:ml-auto'
+                    }`}
+                  >
+                    <div className={`p-6 md:p-8 rounded-3xl bg-stone-900/80 border ${item.borderColor} backdrop-blur-xl shadow-2xl transition-all duration-300 group hover:-translate-y-1 relative overflow-hidden`}>
+                      {/* Colorful corner light */}
+                      <div className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl ${item.gradient} opacity-10 rounded-full blur-2xl group-hover:opacity-25 transition-opacity`} />
+
+                      <div className="flex items-center justify-between gap-4 mb-4 pb-4 border-b border-stone-800/80 relative z-10">
+                        <div className="flex items-center gap-3">
+                          <div className="w-12 h-12 rounded-2xl bg-stone-950 border border-white/10 p-2 flex items-center justify-center shrink-0 shadow-md">
+                            <img src={item.image} alt={item.title} className="w-full h-full object-contain" />
+                          </div>
+                          <div>
+                            <span className={`text-xs font-mono font-bold uppercase tracking-wider block ${item.phaseColor}`}>
+                              {item.phase}
+                            </span>
+                            <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                              {item.title}
+                            </h3>
+                          </div>
+                        </div>
+
+                        <span className="text-xs font-mono font-bold text-stone-200 bg-stone-950 px-3 py-1 rounded-full border border-white/10 shrink-0 shadow-sm">
+                          {item.date}
+                        </span>
+                      </div>
+
+                      {/* Bullets */}
+                      <div className="space-y-2 mb-6 relative z-10">
+                        {item.bullets.map((bullet, bIdx) => (
+                          <div key={bIdx} className="flex items-start gap-2.5 text-xs md:text-sm text-stone-300 font-light">
+                            <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                            <span>{bullet}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2 relative z-10">
+                        {item.tags.map((tag) => (
+                          <span
+                            key={tag}
+                            className="px-2.5 py-1 rounded-lg text-xs font-mono text-stone-300 bg-stone-950/90 border border-white/10 shadow-sm"
+                          >
+                            #{tag}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              );
+            })}
           </div>
-
-          {/* Milestone cards */}
-          {milestones.map((item, i) => (
-            <div key={item.id} className="tl-row">
-              {/* Left slot */}
-              <div className="tl-slot tl-slot-left">
-                {i % 2 === 0 && <TimelineCard item={item} isLeft={true} index={i} />}
-              </div>
-
-              {/* Center dot + connector */}
-              <div className="tl-center">
-                <motion.div
-                  className="tl-dot"
-                  initial={reduced ? false : { scale: 0, opacity: 0 }}
-                  whileInView={{ scale: 1, opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.2, type: 'spring', stiffness: 300 }}
-                  style={{
-                    background: colorMap[item.accent].dot,
-                    boxShadow: `0 0 0 4px var(--bg), 0 0 0 6px ${colorMap[item.accent].border}`,
-                  }}
-                >
-                  {item.isCurrent && (
-                    <motion.span
-                      className="tl-dot-ring"
-                      animate={{ scale: [1, 1.8, 1], opacity: [0.6, 0, 0.6] }}
-                      transition={{ duration: 2.5, repeat: Infinity }}
-                      style={{ background: colorMap[item.accent].dot }}
-                    />
-                  )}
-                </motion.div>
-              </div>
-
-              {/* Right slot */}
-              <div className="tl-slot tl-slot-right">
-                {i % 2 !== 0 && <TimelineCard item={item} isLeft={false} index={i} />}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
-
-      {/* ── Styles ── */}
-      <style>{`
-        /* Progress Steps */
-        .tl-progress-steps {
-          display: flex;
-          align-items: center;
-          gap: 0.5rem;
-          flex-wrap: wrap;
-          padding: 1rem 1.25rem;
-          background: var(--bg-white);
-          border: 1.5px solid var(--border);
-          border-radius: var(--r-xl);
-          box-shadow: var(--shadow-sm);
-        }
-        .tl-step {
-          display: flex;
-          align-items: center;
-          gap: 0.375rem;
-          flex: 1;
-          min-width: 0;
-        }
-
-        /* Timeline body grid */
-        .tl-body {
-          position: relative;
-        }
-        .tl-line {
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-          top: 0; bottom: 0;
-          width: 2px;
-          background: var(--border-md);
-          border-radius: 2px;
-          overflow: hidden;
-        }
-        .tl-line-fill {
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(
-            to bottom,
-            transparent 0%,
-            var(--violet-mid) 8%,
-            var(--violet-mid) 92%,
-            transparent 100%
-          );
-        }
-
-        /* Each milestone row */
-        .tl-row {
-          display: grid;
-          grid-template-columns: 1fr 48px 1fr;
-          align-items: center;
-          gap: 0;
-          margin-bottom: 2.5rem;
-        }
-        .tl-row:last-child {
-          margin-bottom: 0;
-        }
-
-        .tl-slot {
-          padding: 0.5rem 0;
-        }
-        .tl-slot-left {
-          padding-right: 1.75rem;
-        }
-        .tl-slot-right {
-          padding-left: 1.75rem;
-        }
-
-        /* Center dot */
-        .tl-center {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          z-index: 2;
-        }
-        .tl-dot {
-          width: 18px;
-          height: 18px;
-          border-radius: 50%;
-          position: relative;
-          flex-shrink: 0;
-        }
-        .tl-dot-ring {
-          position: absolute;
-          inset: -4px;
-          border-radius: 50%;
-          opacity: 0.5;
-          pointer-events: none;
-        }
-
-        /* Card wrapper */
-        .tl-card-wrapper {
-          width: 100%;
-        }
-        .tl-card {
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
-        }
-        .tl-card:hover {
-          transform: translateY(-5px);
-        }
-
-        /* ── Tablet: single column ── */
-        @media (max-width: 820px) {
-          .tl-progress-steps {
-            gap: 0.375rem;
-            padding: 0.875rem 1rem;
-          }
-          .tl-step span:last-of-type {
-            display: none;
-          }
-          .tl-line {
-            left: 20px;
-            transform: none;
-          }
-          .tl-row {
-            grid-template-columns: 40px 1fr;
-            grid-template-rows: auto;
-            margin-bottom: 1.75rem;
-          }
-          .tl-center {
-            grid-column: 1;
-            grid-row: 1;
-            align-self: flex-start;
-            padding-top: 1.5rem;
-          }
-          .tl-slot-left,
-          .tl-slot-right {
-            grid-column: 2;
-            grid-row: 1;
-            padding-left: 1rem;
-            padding-right: 0;
-          }
-        }
-
-        /* ── Mobile ── */
-        @media (max-width: 480px) {
-          .tl-progress-steps {
-            display: none;
-          }
-          .tl-line {
-            left: 16px;
-          }
-          .tl-row {
-            grid-template-columns: 36px 1fr;
-          }
-          .tl-slot-left,
-          .tl-slot-right {
-            padding-left: 0.75rem;
-          }
-          .tl-card {
-            padding: 1.25rem !important;
-          }
-          .tl-dot {
-            width: 14px;
-            height: 14px;
-          }
-        }
-      `}</style>
     </section>
   );
 }

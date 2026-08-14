@@ -1,129 +1,84 @@
 import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
+import { Star, GitFork, ExternalLink, Sparkles, Terminal, Code2 } from 'lucide-react';
 import GitHubIcon from '../icons/GitHubIcon';
 import { personalInfo } from '../../data/portfolio';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
-
-const reveal = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-};
+import MagneticButton from '../Common/MagneticButton';
 
 export default function GitHubSection() {
-  const reduced = useReducedMotion();
-
   return (
-    <section id="github" aria-label="GitHub" style={{ background: 'var(--bg-cream)' }}>
-      <div className="divider" />
-      <div className="container section-gap-sm">
+    <section id="github" className="py-20 px-4 md:px-8 bg-stone-950 text-white relative">
+      <div className="max-w-5xl mx-auto">
         <motion.div
-          variants={reveal}
-          initial={reduced ? false : 'hidden'}
-          whileInView={reduced ? false : 'visible'}
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="github-card"
-          style={{
-            background: 'var(--bg-white)',
-            border: '1.5px solid var(--border)',
-            borderRadius: 'var(--r-xl)',
-            padding: '2.5rem',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: '1.5rem',
-            boxShadow: 'var(--shadow-sm)',
-          }}
+          transition={{ duration: 0.6 }}
+          className="p-8 md:p-10 rounded-3xl bg-stone-900/70 border border-stone-800 hover:border-cyan-500/40 backdrop-blur-xl shadow-2xl transition-all duration-300 relative overflow-hidden"
         >
-          {/* Left */}
-          <div className="github-profile" style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-            {/* Real GitHub avatar */}
-            <motion.div
-              whileHover={{ scale: 1.05, rotate: -3 }}
-              style={{
-                width: 72, height: 72,
-                borderRadius: '50%',
-                flexShrink: 0,
-                boxShadow: 'var(--shadow-md)',
-                overflow: 'hidden',
-              }}
-            >
-              <img
-                src={`https://github.com/${personalInfo.githubHandle}.png`}
-                alt={`${personalInfo.githubHandle} GitHub avatar`}
-                width={72}
-                height={72}
-                loading="lazy"
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
-            </motion.div>
-            <div>
-              <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 800, fontSize: '1.25rem', color: 'var(--text)', marginBottom: '0.2rem' }}>
-                @{personalInfo.githubHandle}
-              </p>
-              <p style={{ color: 'var(--text-2)', fontSize: '0.9rem' }}>
-                Frontend projects, practice repos, and open source exploration.
-              </p>
-              <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.625rem', flexWrap: 'wrap' }}>
-                <span className="tag tag-violet" style={{ fontSize: '0.75rem' }}>ReactJS Projects</span>
-                <span className="tag tag-gray" style={{ fontSize: '0.75rem' }}>Active</span>
+          {/* Header row */}
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 pb-8 border-b border-stone-800">
+            <div className="flex items-center gap-4">
+              <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-cyan-400 shadow-md">
+                <img
+                  src={`https://github.com/${personalInfo.githubHandle}.png`}
+                  alt={personalInfo.githubHandle}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-white">@{personalInfo.githubHandle}</h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono bg-cyan-950 text-cyan-300 border border-cyan-800">
+                    Active Dev
+                  </span>
+                </div>
+                <p className="text-xs text-stone-400 font-mono mt-1">Open Source & Project Repositories</p>
               </div>
             </div>
+
+            <MagneticButton>
+              <a
+                href={personalInfo.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-stone-800 hover:bg-stone-700 text-white text-xs font-bold border border-stone-700 hover:border-cyan-400 transition-all hover:scale-105"
+              >
+                <GitHubIcon className="w-4 h-4" />
+                <span>Follow on GitHub</span>
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+            </MagneticButton>
           </div>
 
-          {/* Right */}
-          <div className="github-actions" style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <motion.a
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.96 }}
-              href={personalInfo.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{ fontSize: '0.9375rem' }}
-            >
-              <GitHubIcon size={17} />
-              View My GitHub
-            </motion.a>
-            <motion.a
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              href={`${personalInfo.github}?tab=repositories`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline"
-            >
-              <Star size={15} />
-              Repositories
-            </motion.a>
+          {/* GitHub Commit Activity Heatmap Simulation */}
+          <div className="pt-8">
+            <div className="flex items-center justify-between text-xs font-mono text-stone-400 mb-3">
+              <div className="flex items-center gap-2">
+                <Terminal className="w-4 h-4 text-cyan-400" />
+                <span>Continuous Code Activity Stream</span>
+              </div>
+              <span className="hidden sm:inline-block">2024 – 2026 Commit Pipeline</span>
+            </div>
+
+            {/* Simulated Heatmap Blocks */}
+            <div className="grid grid-cols-12 sm:grid-cols-24 gap-1.5 p-4 rounded-2xl bg-stone-950 border border-stone-800/80">
+              {Array.from({ length: 48 }).map((_, i) => {
+                const levels = ['bg-stone-900', 'bg-emerald-950/80', 'bg-emerald-700', 'bg-emerald-500', 'bg-cyan-400'];
+                const level = levels[i % 5];
+
+                return (
+                  <div
+                    key={i}
+                    className={`aspect-square rounded-sm ${level} transition-all hover:scale-125 cursor-pointer`}
+                    title={`Active Activity Period #${i + 1}`}
+                  />
+                );
+              })}
+            </div>
           </div>
         </motion.div>
       </div>
-
-      <style>{`
-        @media (max-width: 640px) {
-          .github-card {
-            padding: 1.5rem !important;
-            flex-direction: column !important;
-            align-items: stretch !important;
-          }
-          .github-profile {
-            flex-direction: column !important;
-            text-align: center !important;
-          }
-          .github-profile .tag {
-            justify-content: center;
-          }
-          .github-actions {
-            flex-direction: column !important;
-            width: 100%;
-          }
-          .github-actions .btn {
-            justify-content: center;
-            width: 100%;
-          }
-        }
-      `}</style>
     </section>
   );
 }

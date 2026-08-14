@@ -117,7 +117,8 @@ export const projects = [
     ],
     techStack: ['ReactJS', 'Zustand', 'JavaScript', 'REST APIs', 'Tailwind CSS', 'AI Integration'],
     github: 'https://github.com/minhthien435/JamWave',
-    hasLiveDemo: false,
+    liveDemo: 'https://jam-wave.vercel.app/',
+    hasLiveDemo: true,
     accentColor: 'cyan',
   },
   {

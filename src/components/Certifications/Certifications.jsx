@@ -1,128 +1,100 @@
 import { motion } from 'framer-motion';
-import { Award } from 'lucide-react';
+import { Award, ExternalLink, ShieldCheck, Sparkles, BookOpen } from 'lucide-react';
 import { certifications } from '../../data/portfolio';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
 
-const reveal = {
-  hidden:  { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-};
-
-const certColors = ['violet', 'cyan', 'yellow'];
-const certBg = {
-  violet: { bg: 'var(--violet-light)', border: 'var(--violet-mid)', text: 'var(--violet)', accentBg: 'var(--violet)' },
-  cyan:   { bg: 'var(--cyan-light)',   border: 'var(--cyan-border)', text: 'var(--cyan-text)', accentBg: 'var(--cyan)' },
-  yellow: { bg: 'var(--yellow-light)', border: 'var(--yellow-border)', text: 'var(--yellow-text)', accentBg: 'var(--yellow)' },
-};
+const certThemes = [
+  {
+    gradient: 'from-violet-500 via-purple-500 to-indigo-600',
+    border: 'border-violet-500/40 hover:border-violet-400',
+    badge: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
+    iconColor: 'text-violet-400',
+    glow: 'from-violet-600/20',
+  },
+  {
+    gradient: 'from-cyan-500 via-teal-500 to-emerald-600',
+    border: 'border-cyan-500/40 hover:border-cyan-400',
+    badge: 'bg-cyan-500/15 text-cyan-300 border-cyan-500/30',
+    iconColor: 'text-cyan-400',
+    glow: 'from-cyan-600/20',
+  },
+  {
+    gradient: 'from-amber-400 via-yellow-500 to-orange-600',
+    border: 'border-amber-500/40 hover:border-amber-400',
+    badge: 'bg-amber-500/15 text-amber-300 border-amber-500/30',
+    iconColor: 'text-amber-400',
+    glow: 'from-amber-600/20',
+  },
+];
 
 export default function Certifications() {
-  const reduced = useReducedMotion();
-
   return (
-    <section id="certifications" aria-label="Certifications" style={{ background: 'var(--bg)' }}>
-      <div className="divider" />
-      <div className="container section-gap">
-        {/* Header */}
-        <motion.div
-          variants={reveal}
-          initial={reduced ? false : 'hidden'}
-          whileInView={reduced ? false : 'visible'}
-          viewport={{ once: true }}
-          style={{ marginBottom: '3rem' }}
-        >
-          <p className="section-eyebrow">Credentials</p>
-          <h2 className="headline" style={{ marginTop: '0.5rem' }}>Certifications</h2>
-          <p style={{ color: 'var(--text-2)', marginTop: '0.5rem', maxWidth: 460, fontSize: '1rem' }}>
+    <section id="certifications" className="py-24 px-4 md:px-8 bg-stone-950 text-white relative overflow-hidden">
+      {/* Background ambient lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-violet-600/10 via-cyan-500/10 to-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
+        <div className="flex flex-col items-start mb-14">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-gradient-to-r from-cyan-500/20 via-violet-500/20 to-amber-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-mono mb-3 shadow-md">
+            <ShieldCheck className="w-3.5 h-3.5 text-cyan-400" />
+            <span>CREDENTIALS</span>
+          </div>
+          <h2 className="text-3xl md:text-5xl font-black tracking-tight text-white mb-3">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-violet-400 to-amber-400">
+              Certifications
+            </span>
+          </h2>
+          <p className="text-stone-400 text-sm md:text-base max-w-2xl leading-relaxed font-light">
             Online courses and specializations completed through Coursera.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
-          {certifications.map((cert, i) => {
-            const color = certColors[i % 3];
-            const theme = certBg[color];
+        {/* Certifications Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {certifications.map((cert, index) => {
+            const theme = certThemes[index % certThemes.length];
 
             return (
               <motion.div
                 key={cert.name}
-                variants={reveal}
-                initial={reduced ? false : 'hidden'}
-                whileInView={reduced ? false : 'visible'}
-                viewport={{ once: true, margin: '-20px' }}
-                transition={{ delay: i * 0.1 }}
-                whileHover={{ y: -4, boxShadow: 'var(--shadow-lg)' }}
-                style={{
-                  background: 'var(--bg-white)',
-                  border: `1.5px solid ${theme.border}`,
-                  borderRadius: 'var(--r-xl)',
-                  padding: '1.5rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '1rem',
-                  boxShadow: 'var(--shadow-sm)',
-                  transition: 'box-shadow 0.25s, transform 0.25s',
-                }}
+                initial={{ opacity: 0, y: 25 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.12 }}
+                className={`p-8 rounded-3xl bg-stone-900/80 border ${theme.border} backdrop-blur-xl flex flex-col justify-between group shadow-xl transition-all duration-300 hover:-translate-y-1.5 relative overflow-hidden`}
               >
-                {/* Top bar */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  {/* Coursera + icon */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-                    <div style={{
-                      width: 38, height: 38, borderRadius: 10,
-                      background: theme.bg, border: `1.5px solid ${theme.border}`,
-                      display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    }}>
-                      <Award size={18} color={theme.text} />
+                <div className={`absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl ${theme.glow} to-transparent rounded-full blur-2xl group-hover:opacity-100 transition-opacity`} />
+
+                <div>
+                  <div className="flex items-center justify-between mb-6 relative z-10">
+                    <div className={`p-3 rounded-2xl bg-stone-950 border border-white/10 ${theme.iconColor} shadow-md`}>
+                      <Award className="w-6 h-6" />
                     </div>
-                    <div>
-                      <p style={{ fontWeight: 700, fontSize: '0.8rem', color: theme.text }}>
-                        {cert.platform}
-                      </p>
-                      <p style={{ fontSize: '0.72rem', color: 'var(--text-3)' }}>
-                        Online Course
-                      </p>
-                    </div>
+                    <span className={`text-xs font-mono font-bold px-3 py-1 rounded-full border ${theme.badge} shadow-sm`}>
+                      {cert.completed}
+                    </span>
                   </div>
-                  {/* Completed badge */}
-                  <span style={{
-                    display: 'inline-flex', alignItems: 'center', gap: '0.3rem',
-                    padding: '0.2rem 0.55rem',
-                    borderRadius: 'var(--r-full)',
-                    background: 'var(--green-light)',
-                    border: '1.5px solid var(--green-border)',
-                    fontSize: '0.7rem', fontWeight: 700,
-                    color: 'var(--green-text)',
-                  }}>
-                    ✓ Done
-                  </span>
+
+                  <div className="text-xs font-mono font-bold text-stone-400 mb-1.5 relative z-10">{cert.institution}</div>
+                  <h3 className="text-lg font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors relative z-10">
+                    {cert.name}
+                  </h3>
                 </div>
 
-                {/* Cert name */}
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: '0.9375rem', color: 'var(--text)', lineHeight: 1.45, flex: 1 }}>
-                  {cert.name}
-                </h3>
+                <div className="pt-6 border-t border-stone-800/80 flex items-center justify-between relative z-10">
+                  <span className="text-xs font-mono text-stone-400">Platform: <strong className="text-stone-200">{cert.platform}</strong></span>
 
-                {/* Footer */}
-                <div style={{ paddingTop: '0.75rem', borderTop: '1.5px solid var(--border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div>
-                    <p style={{ fontWeight: 600, fontSize: '0.8125rem', color: 'var(--text-2)' }}>
-                      {cert.institution}
-                    </p>
-                    <p style={{ fontSize: '0.75rem', color: 'var(--text-3)', marginTop: '0.1rem' }}>
-                      {cert.completed}
-                    </p>
-                  </div>
-                  {/* View Credential — real course page on Coursera */}
-                  <a
-                    href={cert.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-ghost"
-                    style={{ fontSize: '0.75rem', padding: '0.3rem 0.75rem' }}
-                  >
-                    View Credential ↗
-                  </a>
+                  {cert.credentialUrl && (
+                    <a
+                      href={cert.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition-colors"
+                    >
+                      <span>Verify</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
                 </div>
               </motion.div>
             );

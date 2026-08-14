@@ -9,10 +9,11 @@ import Timeline from './components/Timeline/Timeline';
 import Projects from './components/Projects/Projects';
 import Certifications from './components/Certifications/Certifications';
 import GitHubSection from './components/GitHub/GitHub';
-import Achievement from './components/Achievement/Achievement';
 import Contact from './components/Contact/Contact';
 import Footer from './components/Footer/Footer';
 import CvModal from './components/CvModal/CvModal';
+import SmoothScroll from './components/Common/SmoothScroll';
+import PageTransition from './components/Common/PageTransition';
 
 export default function App() {
   const [isCvOpen, setIsCvOpen] = useState(false);
@@ -21,30 +22,32 @@ export default function App() {
   const handleCloseCv = () => setIsCvOpen(false);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <CustomCursor />
-      <Navbar onOpenCv={handleOpenCv} />
-      <main>
-        <Hero onOpenCv={handleOpenCv} />
-        <About />
-        <Skills />
-        <Timeline />
-        <Projects />
-        <Certifications />
-        <GitHubSection />
-        <Achievement />
-        <Contact onOpenCv={handleOpenCv} />
-      </main>
-      <Footer />
-      <AnimatePresence>
-        {isCvOpen && <CvModal isOpen={isCvOpen} onClose={handleCloseCv} />}
-      </AnimatePresence>
-    </motion.div>
+    <SmoothScroll>
+      <PageTransition>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="min-h-screen bg-stone-950 text-stone-100 overflow-x-hidden selection:bg-cyan-500 selection:text-black"
+        >
+          <CustomCursor />
+          <Navbar onOpenCv={handleOpenCv} />
+          <main>
+            <Hero onOpenCv={handleOpenCv} />
+            <About />
+            <Skills />
+            <Timeline />
+            <Projects />
+            <Certifications />
+            <GitHubSection />
+            <Contact onOpenCv={handleOpenCv} />
+          </main>
+          <Footer />
+          <AnimatePresence>
+            {isCvOpen && <CvModal isOpen={isCvOpen} onClose={handleCloseCv} />}
+          </AnimatePresence>
+        </motion.div>
+      </PageTransition>
+    </SmoothScroll>
   );
 }
-
-
